@@ -16,9 +16,9 @@ class ChangeUserData: AbstractRequestFactory {
     let baseUrl = URL(string: "https://raw.githubusercontent.com/mclaud2007/online-store-api/master/responses/")!
     
     init(
-        errorParser: AbstractErrorParser,
-        sessionManager: SessionManager,
-        queue: DispatchQueue? = DispatchQueue.global(qos: .utility))
+            errorParser: AbstractErrorParser,
+            sessionManager: SessionManager,
+            queue: DispatchQueue? = DispatchQueue.global(qos: .utility))
     {
         self.errorParser = errorParser
         self.sessionManager = sessionManager
