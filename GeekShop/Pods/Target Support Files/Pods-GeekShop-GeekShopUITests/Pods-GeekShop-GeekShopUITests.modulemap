@@ -1,0 +1,6 @@
+framework module Pods_GeekShop_GeekShopUITests {
+  umbrella header "Pods-GeekShop-GeekShopUITests-umbrella.h"
+
+  export *
+  module * { export * }
+}

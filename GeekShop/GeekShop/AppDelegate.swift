@@ -10,11 +10,53 @@ import UIKit
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
-
-
+    let requestFactory = RequestFactory()
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
+        let auth = requestFactory.makeAuthRequestFactory()
+        
+        auth.login(userName: "Somebody", password: "mypassword") { response in
+            switch response.result {
+            case .success(let login):
+                print(login)
+            case .failure(let error):
+                print(error.localizedDescription)
+            }
+        }
+        
+        // Logout
+        auth.logout { response in
+            switch response.result {
+            case .success(let logout):
+                print(logout)
+            case .failure(let error):
+                print(error.localizedDescription)
+            }
+        }
+        
+        // Регистрация пользователя
+        let register = requestFactory.makeRegisterRequestFactory()
+        register.doRegister(login: "test", password: "12345", firstName: "Sergey", lastName: "Ivanov", email: "s@ivanov.com") { response in
+            switch response.result {
+            case .success(let register):
+                print(register)
+            case .failure(let error):
+                print(error.localizedDescription)
+            }
+        }
+        
+        // Изменение данных
+        let change = requestFactory.makeChangeUserDataRequestFactory()
+        change.doChange(login: "test", password: "123456", firstName: "Ivan", lastName: "Sergeev", email: "s@ivanov") { response in
+            switch response.result {
+            case .success(let change):
+                print(change)
+            case .failure(let error):
+                print(error.localizedDescription)
+            }
+        }
+        
         return true
     }
 
