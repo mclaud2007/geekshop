@@ -13,7 +13,7 @@ class Catalog: AbstractRequestFactory {
     var errorParser: AbstractErrorParser
     var sessionManager: SessionManager
     var queue: DispatchQueue?
-    let baseUrl = URL(string: "https://raw.githubusercontent.com/mclaud2007/online-store-api/master/responses/")!
+    let baseUrl = URL(string: "http://127.0.0.1:8080/catalog/")!
     
     init(errorParser: AbstractErrorParser,
          sessionManager: SessionManager,

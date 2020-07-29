@@ -11,7 +11,7 @@ import Alamofire
 
 extension Users {
     struct Login: RequestRouter {
-        var path: String = "login.json"
+        var path: String = "login"
         let baseUrl: URL
         let method: HTTPMethod = .get
         
@@ -27,18 +27,22 @@ extension Users {
     }
     
     struct Logout: RequestRouter {
-        var path: String = "logout.json"
+        var path: String = "logout"
         let baseUrl: URL
         let method: HTTPMethod = .get
         
         let userId: Int
-        var parameters: Parameters? = nil
+        var parameters: Parameters? {
+            return [
+                "userId": userId
+            ]
+        }
     }
     
     struct UserData: RequestRouter {
         let baseUrl: URL
         let method: HTTPMethod = .get
-        let path: String = "changeUserData.json"
+        let path: String = "change"
         
         let userId: Int
         let login: String
@@ -54,7 +58,7 @@ extension Users {
                 "first_name": firstName,
                 "last_name": lastName ?? "",
                 "email": email,
-                "id": userId
+                "userId": userId
             ]
         }
     }
@@ -62,7 +66,7 @@ extension Users {
     struct RegisterData: RequestRouter {
         let baseUrl: URL
         let method: HTTPMethod = .get
-        let path: String = "registerUser.json"
+        let path: String = "register"
         
         let login: String
         let password: String

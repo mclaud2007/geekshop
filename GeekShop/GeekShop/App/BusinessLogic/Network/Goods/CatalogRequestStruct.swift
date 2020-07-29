@@ -13,17 +13,21 @@ extension Catalog {
     struct CatalogData: RequestRouter {
         var baseUrl: URL
         var method: HTTPMethod = .get
-        var path: String = "catalogData.json"
+        var path: String = "list"
         var parameters: Parameters? = nil
     }
     
     struct GoodById: RequestRouter {
         var baseUrl: URL
         var method: HTTPMethod = .get
-        var path: String = "getGoodById.json"
+        var path: String = "product"
         
         let productId: Int
-        var parameters: Parameters? = nil
+        var parameters: Parameters? {
+            return [
+                "id": productId
+            ]
+        }
         
     
     }
