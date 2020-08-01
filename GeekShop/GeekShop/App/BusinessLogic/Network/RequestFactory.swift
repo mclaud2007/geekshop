@@ -21,36 +21,25 @@ class RequestFactory {
     
     let sessionQueue = DispatchQueue.global(qos: .utility)
         
-    func makeAuthRequestFactory() -> Auth {
+    func makeUsersFactory() -> Users {
         let container = Container()
         
         container.register(AbstractErrorParser.self) { _ in ErrorParser() }
-        container.register(Auth.self) { r in
-            Auth(errorParser: r.resolve(AbstractErrorParser.self)!, sessionManager: self.commonSessionManager)
+        container.register(Users.self) { r in
+            Users(errorParser: r.resolve(AbstractErrorParser.self)!, sessionManager: self.commonSessionManager)
         }
         
-        return container.resolve(Auth.self)!
+        return container.resolve(Users.self)!
     }
     
-    func makeRegisterRequestFactory() -> RegisterRequestFactory {
+    func makeCatalogFactory() -> Catalog {
         let container = Container()
         
         container.register(AbstractErrorParser.self) { _ in ErrorParser() }
-        container.register(Register.self) { r in
-            Register(errorParser: r.resolve(AbstractErrorParser.self)!, sessionManager: self.commonSessionManager)
+        container.register(Catalog.self) { r in
+            Catalog(errorParser: r.resolve(AbstractErrorParser.self)!, sessionManager: self.commonSessionManager)
         }
         
-        return container.resolve(Register.self)!
-    }
-    
-    func makeChangeUserDataRequestFactory() -> ChangeUserDataRequestFactory {
-        let container = Container()
-        
-        container.register(AbstractErrorParser.self) { _ in ErrorParser() }
-        container.register(ChangeUserData.self) { r in
-            ChangeUserData(errorParser: r.resolve(AbstractErrorParser.self)!, sessionManager: self.commonSessionManager)
-        }
-        
-        return container.resolve(ChangeUserData.self)!
+        return container.resolve(Catalog.self)!
     }
 }

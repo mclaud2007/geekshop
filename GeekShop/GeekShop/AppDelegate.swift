@@ -14,49 +14,78 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
-        let auth = requestFactory.makeAuthRequestFactory()
-        
-        auth.login(userName: "Somebody", password: "mypassword") { response in
-            switch response.result {
-            case .success(let login):
-                print(login)
-            case .failure(let error):
-                print(error.localizedDescription)
-            }
-        }
-        
-        // Logout
-        auth.logout { response in
-            switch response.result {
-            case .success(let logout):
-                print(logout)
-            case .failure(let error):
-                print(error.localizedDescription)
-            }
-        }
-        
+        let users = requestFactory.makeUsersFactory()
+
         // Регистрация пользователя
-        let register = requestFactory.makeRegisterRequestFactory()
-        register.doRegister(login: "test", password: "12345", firstName: "Sergey", lastName: "Ivanov", email: "s@ivanov.com") { response in
+        users.registerUserWith(firstName: "Sergey", lastName: "Ivanov", userLogin: "test", userPassword: "12345", userEmail: "s@ivanov.com") { response in
             switch response.result {
             case .success(let register):
                 print(register)
+                break
+            case .failure(let error):
+                print(error)
+                break
+            }
+        }
+
+        // Login
+        users.loginWith(userLogin: "Somebody", userPassword: "Password") { response in
+            switch response.result {
+            case .success(let login):
+                print(login)
+                break
             case .failure(let error):
                 print(error.localizedDescription)
+                break
             }
         }
         
-        // Изменение данных
-        let change = requestFactory.makeChangeUserDataRequestFactory()
-        change.doChange(login: "test", password: "123456", firstName: "Ivan", lastName: "Sergeev", email: "s@ivanov") { response in
+        // logout
+        users.logoutCurrentUser {  response in
+            switch response.result {
+            case .success(let logout):
+                print(logout)
+                break
+            case .failure(let error):
+                print(error.localizedDescription)
+                break
+            }
+        }
+
+        // ChangeData
+        users.changeUserDataBy(id: 1, firstName: "Ivan", lastName: "Sergeev", userLogin: "test", userPassword: "12345", userEmail: "s@ivanov.ru") { response in
             switch response.result {
             case .success(let change):
                 print(change)
+                break
+            case .failure(let error):
+                print(error)
+                break
+            }
+        }
+        
+        let catalog = requestFactory.makeCatalogFactory()
+
+        catalog.productsList { response in
+            switch response.result {
+            case .success(let catalogResult):
+                print(catalogResult)
+                break
             case .failure(let error):
                 print(error.localizedDescription)
             }
         }
-        
+
+        catalog.productBy(id: 123) { response in
+            switch response.result {
+            case .success(let catalogResult):
+                print(catalogResult)
+                break
+            case .failure(let error):
+                print(error.localizedDescription)
+            }
+        }
+
         return true
     }
 
