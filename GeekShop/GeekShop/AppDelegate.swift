@@ -10,11 +10,82 @@ import UIKit
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
-
-
+    let requestFactory = RequestFactory()
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
+        let users = requestFactory.makeUsersFactory()
+
+        // Регистрация пользователя
+        users.registerUserWith(firstName: "Sergey", lastName: "Ivanov", userLogin: "test", userPassword: "12345", userEmail: "s@ivanov.com") { response in
+            switch response.result {
+            case .success(let register):
+                print(register)
+                break
+            case .failure(let error):
+                print(error)
+                break
+            }
+        }
+
+        // Login
+        users.loginWith(userLogin: "Somebody", userPassword: "Password") { response in
+            switch response.result {
+            case .success(let login):
+                print(login)
+                break
+            case .failure(let error):
+                print(error.localizedDescription)
+                break
+            }
+        }
+        
+        // logout
+        users.logoutCurrentUser {  response in
+            switch response.result {
+            case .success(let logout):
+                print(logout)
+                break
+            case .failure(let error):
+                print(error.localizedDescription)
+                break
+            }
+        }
+
+        // ChangeData
+        users.changeUserDataBy(id: 1, firstName: "Ivan", lastName: "Sergeev", userLogin: "test", userPassword: "12345", userEmail: "s@ivanov.ru") { response in
+            switch response.result {
+            case .success(let change):
+                print(change)
+                break
+            case .failure(let error):
+                print(error)
+                break
+            }
+        }
+        
+        let catalog = requestFactory.makeCatalogFactory()
+
+        catalog.productsList { response in
+            switch response.result {
+            case .success(let catalogResult):
+                print(catalogResult)
+                break
+            case .failure(let error):
+                print(error.localizedDescription)
+            }
+        }
+
+        catalog.productBy(id: 123) { response in
+            switch response.result {
+            case .success(let catalogResult):
+                print(catalogResult)
+                break
+            case .failure(let error):
+                print(error.localizedDescription)
+            }
+        }
+
         return true
     }
 
