@@ -13,14 +13,7 @@ protocol UsersRequestFactory {
     func loginWith(userLogin: String, userPassword: String, completion: @escaping (Alamofire.DataResponse<LoginResult>) -> Void)
     func logoutCurrentUser(completion: @escaping (Alamofire.DataResponse<LogoutResult>) -> Void)
     
-    func changeUserDataBy(id: Int,
-                          firstName: String, lastName: String?,
-                          userLogin: String, userPassword: String,
-                          userEmail: String,
-                          completion: @escaping (Alamofire.DataResponse<ChangeUserDataResult>) -> Void)
+    func changeUserFrom(user data: User, completion: @escaping (Alamofire.DataResponse<ChangeUserDataResult>) -> Void)
     
-    func registerUserWith(firstName: String, lastName: String?,
-                          userLogin: String, userPassword: String,
-                          userEmail: String,
-                          completion: @escaping (Alamofire.DataResponse<RegisterResult>) -> Void)
+    func registerUserWith(user data: User, completion: @escaping (Alamofire.DataResponse<RegisterResult>) -> Void)
 }

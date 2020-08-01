@@ -17,17 +17,15 @@ class Users: AbstractRequestFactory {
     
     init(errorParser: AbstractErrorParser,
          sessionManager: SessionManager,
-         queue: DispatchQueue? = DispatchQueue.global(qos: .utility))
-    {
+         queue: DispatchQueue? = DispatchQueue.global(qos: .utility)) {
         self.errorParser = errorParser
         self.sessionManager = sessionManager
         self.queue = queue
     }
 }
 
-extension Users: UsersRequestFactory {
-    func loginWith(userLogin: String, userPassword: String, completion: @escaping (DataResponse<LoginResult>) -> Void)
-    {
+extension Users: UsersRequestFactory {    
+    func loginWith(userLogin: String, userPassword: String, completion: @escaping (DataResponse<LoginResult>) -> Void) {
         let requestModel = Login(baseUrl: baseUrl, login: userLogin, password: userPassword)
         self.request(request: requestModel, completionHandler: completion)
     }
@@ -37,24 +35,23 @@ extension Users: UsersRequestFactory {
         self.request(request: requestModel, completionHandler: completion)
     }
 
-    func changeUserDataBy(id: Int,
-                          firstName: String, lastName: String?,
-                          userLogin: String, userPassword: String,
-                          userEmail: String,
-                          completion: @escaping (DataResponse<ChangeUserDataResult>) -> Void)
-    {
-        let requestModel = UserData(baseUrl: baseUrl, userId: id, login: userLogin, password: userPassword, email: userEmail, firstName: firstName, lastName: lastName)
+    func changeUserFrom(user data: User, completion: @escaping (DataResponse<ChangeUserDataResult>) -> Void) {
+        guard let userId = data.userId else { return }
+        
+        let requestModel = UserData(baseUrl: baseUrl,
+                                    userId: userId, login: data.login, password: data.password,
+                                    email: data.email, firstName: data.firstName, lastName: data.lastName)
+        
         self.request(request: requestModel, completionHandler: completion)
     }
 
-    func registerUserWith(firstName: String, lastName: String?,
-                          userLogin: String, userPassword: String,
-                          userEmail: String,
-                          completion: @escaping (DataResponse<RegisterResult>) -> Void)
-    {
-        let requestModel = RegisterData(baseUrl: baseUrl, login: userLogin, password: userPassword, email: userEmail, firstName: firstName, lastName: lastName)
+    func registerUserWith(user data: User, completion: @escaping (DataResponse<RegisterResult>) -> Void) {
+        let requestModel = RegisterData(baseUrl: baseUrl,
+                                        login: data.login, password: data.password,
+                                        email: data.email, firstName: data.firstName,
+                                        lastName: data.lastName)
+        
         self.request(request: requestModel, completionHandler: completion)
     }
-    
     
 }

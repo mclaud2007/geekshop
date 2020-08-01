@@ -25,8 +25,8 @@ class RequestFactory {
         let container = Container()
         
         container.register(AbstractErrorParser.self) { _ in ErrorParser() }
-        container.register(Users.self) { r in
-            Users(errorParser: r.resolve(AbstractErrorParser.self)!, sessionManager: self.commonSessionManager)
+        container.register(Users.self) { resolver in
+            Users(errorParser: resolver.resolve(AbstractErrorParser.self)!, sessionManager: self.commonSessionManager)
         }
         
         return container.resolve(Users.self)!
@@ -36,10 +36,21 @@ class RequestFactory {
         let container = Container()
         
         container.register(AbstractErrorParser.self) { _ in ErrorParser() }
-        container.register(Catalog.self) { r in
-            Catalog(errorParser: r.resolve(AbstractErrorParser.self)!, sessionManager: self.commonSessionManager)
+        container.register(Catalog.self) { resolver in
+            Catalog(errorParser: resolver.resolve(AbstractErrorParser.self)!, sessionManager: self.commonSessionManager)
         }
         
         return container.resolve(Catalog.self)!
+    }
+    
+    func makeReviewsFactory() -> Reviews {
+        let container = Container()
+        
+        container.register(AbstractErrorParser.self) { _ in ErrorParser() }
+        container.register(Reviews.self) { resolver in
+            Reviews(errorParser: resolver.resolve(AbstractErrorParser.self)!, sessionManager: self.commonSessionManager)
+        }
+        
+        return container.resolve(Reviews.self)!
     }
 }

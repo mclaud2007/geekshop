@@ -22,4 +22,12 @@ func routes(_ app: Application) throws {
             return resulter.returnError(message: "You must specify method")
         }
     }
+    
+    app.get("reviews", ":action") { req -> String in
+        if let action = req.parameters.get("action") {
+            return Reviews().doAction(action: action, queryString: req.query)
+        } else {
+            return resulter.returnError(message: "You must specify method")
+        }
+    }
 }

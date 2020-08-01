@@ -44,13 +44,12 @@ class CatalogTests: XCTestCase {
     }
 
     func testCatalogData() {
-        catalogObject.productsList() { [weak self] (response: DataResponse<CatalogResult>) in
+        catalogObject.getProductsList { [weak self] (response: DataResponse<CatalogResult>) in
             switch response.result {
             case .success(let productResult):
-                if productResult.count == 0 {
+                if productResult.isEmpty {
                     XCTFail("No products return")
                 }
-                break
             case .failure(let error):
                 XCTFail(error.localizedDescription)
             }
@@ -62,13 +61,12 @@ class CatalogTests: XCTestCase {
     }
     
     func testGoodById() {
-        catalogObject.productBy(id: 1234) { [weak self] (response: DataResponse<ProductResult>) in
+        catalogObject.getProductBy(productId: 123) { [weak self] (response: DataResponse<ProductResult>) in
             switch response.result {
             case .success(let goodResult):
                 if goodResult.productDescription.isEmpty {
                     XCTFail("No product description")
                 }
-                break
             case .failure(let error):
                 XCTFail(error.localizedDescription)
             }

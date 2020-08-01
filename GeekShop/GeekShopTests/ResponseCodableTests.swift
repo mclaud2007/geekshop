@@ -5,7 +5,7 @@
 //  Created by Григорий Мартюшин on 25.07.2020.
 //  Copyright © 2020 Григорий Мартюшин. All rights reserved.
 //
-
+// swiftlint:disable identifier_name
 import XCTest
 import Alamofire
 @testable import GeekShop
@@ -52,7 +52,7 @@ class ResponseCodableTests: XCTestCase {
         .request("https://jsonplaceholder.typicode.com/posts/1")
             .responseCodable(errorParser: errorParse) { [weak self] (response: DataResponse<PostStub>) in
                 switch response.result {
-                case .success(_): break
+                case .success: break
                 case .failure(let error):
                     XCTFail(error.localizedDescription)
                 }

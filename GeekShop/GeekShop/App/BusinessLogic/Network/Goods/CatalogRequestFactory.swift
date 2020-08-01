@@ -10,6 +10,6 @@ import Foundation
 import Alamofire
 
 protocol CatalogRequestFactory: AbstractRequestFactory {
-    func productsList(completion: @escaping (Alamofire.DataResponse<CatalogResult>) -> Void)
-    func productBy(id: Int, competion: @escaping (Alamofire.DataResponse<ProductResult>) -> Void)
+    func getProductsList(completion: @escaping (Alamofire.DataResponse<CatalogResult>) -> Void)
+    func getProductBy(productId: Int, competion: @escaping (Alamofire.DataResponse<ProductResult>) -> Void)
 }
