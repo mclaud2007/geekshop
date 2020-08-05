@@ -30,4 +30,12 @@ func routes(_ app: Application) throws {
             return resulter.returnError(message: "You must specify method")
         }
     }
+    
+    app.get("basket", ":action") { req -> String in
+        if let action = req.parameters.get("action") {
+            return Basket().doAction(action: action, queryString: req.query)
+        } else {
+            return resulter.returnError(message: "You must specify method")
+        }
+    }
 }

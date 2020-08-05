@@ -8,6 +8,9 @@
 import Foundation
 import Vapor
 
+typealias User = Dictionary<String,Any>
+typealias UserResult = Dictionary<String,Any>
+
 class Users {
     let resulter = ShowResults()
     
@@ -47,19 +50,19 @@ class Users {
     func login(_ queryString: URLQueryContainer?) -> String {
         guard let query = try? queryString?.get(LoginGetParam.self),
             let userName = query.username,
-            userName == "Somebody",
             let userPassword = query.password,
+            userName == "Somebody",
             userPassword == "Password" else {
                 return resulter.returnError(message: "User not found")
         }
-        
-        let user: Dictionary<String,Any> = ["id_user": 12,
-                                               "user_login": userName,
-                                               "user_name": "John",
-                                               "user_lastname": "Doe"
+                    
+        let user: User = ["id_user": 12,
+                          "user_login": userName,
+                          "user_name": "John",
+                          "user_lastname": "Doe"
         ]
         
-        let result: Dictionary<String,Any> = ["authToken": "some_authorizaion_token", "user": user]
+        let result: UserResult = ["authToken": "some_authorizaion_token", "user": user]
         
         
         return resulter.returnResult(result)

@@ -8,6 +8,8 @@
 import Foundation
 import Vapor
 
+typealias Review = Dictionary<String,Any>
+
 class Reviews {
     let resulter = ShowResults()
     
@@ -24,7 +26,7 @@ class Reviews {
         var reviewId: Int?
     }
     
-    var reviewDB: [Dictionary<String,Any>] = [
+    var reviewDB: [Review] = [
         ["id_product": 123,
          "id": 1,
          "user_name": "Ivan",
@@ -78,7 +80,9 @@ class Reviews {
             "show": false
         ])
         
-        let result: Dictionary<String,Any> = ["result": 1, "userMessage": "Отзыв №\(newReviewId) был передан на модерацию"]
+        let result: Review = ["result": 1,
+                              "userMessage": "Отзыв №\(newReviewId) был передан на модерацию"
+        ]
         
         return resulter.returnResult(result)
     }
