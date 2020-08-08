@@ -17,8 +17,7 @@ class Catalog: AbstractRequestFactory {
     
     init(errorParser: AbstractErrorParser,
          sessionManager: SessionManager,
-         queue: DispatchQueue? = DispatchQueue.global(qos: .utility))
-    {
+         queue: DispatchQueue? = DispatchQueue.global(qos: .utility)) {
         self.errorParser = errorParser
         self.sessionManager = sessionManager
         self.queue = queue
@@ -26,13 +25,13 @@ class Catalog: AbstractRequestFactory {
 }
 
 extension Catalog: CatalogRequestFactory {
-    func productsList(completion: @escaping (DataResponse<CatalogResult>) -> Void) {
+    func getProductsList(completion: @escaping (DataResponse<CatalogResult>) -> Void) {
         let requestModel = CatalogData(baseUrl: baseUrl)
         self.request(request: requestModel, completionHandler: completion)
     }
     
-    func productBy(id: Int, competion: @escaping (DataResponse<ProductResult>) -> Void) {
-        let requestModel = GoodById(baseUrl: baseUrl, productId: id)
+    func getProductBy(productId: Int, competion: @escaping (DataResponse<ProductResult>) -> Void) {
+        let requestModel = GoodById(baseUrl: baseUrl, productId: productId)
         self.request(request: requestModel, completionHandler: competion)
     }
 }

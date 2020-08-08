@@ -42,13 +42,12 @@ class UsersTests: XCTestCase {
     }
 
     func testLogin() {
-        usersObject.loginWith(userLogin: "test", userPassword: "12345") { [weak self] (response: DataResponse<LoginResult>) in
+        usersObject.loginWith(userLogin: "Somebody", userPassword: "Password") { [weak self] (response: DataResponse<LoginResult>) in
             switch response.result {
             case .success(let loginResult):
                 if loginResult.authToken.isEmpty {
                    XCTFail("Autho token is empty")
                 }
-                break
             case .failure(let error):
                 XCTFail(error.localizedDescription)
             }
@@ -65,7 +64,6 @@ class UsersTests: XCTestCase {
                 if logoutResult.result != 1 {
                     XCTFail("Unknown LogoutResult")
                 }
-                break
             case .failure(let error):
                 XCTFail(error.localizedDescription)
             }
@@ -76,13 +74,15 @@ class UsersTests: XCTestCase {
     }
     
     func testRegister() {
-        usersObject.registerUserWith(firstName: "Test", lastName: "Last", userLogin: "test", userPassword: "54321", userEmail: "test@mail.com") { [weak self] (response: DataResponse<RegisterResult>) in
+        // Создаем экземпляр пользователя для регистрации
+        let userToRegister = User(userId: nil, login: "test", password: "123456", email: "s@ivanov.com", firstName: "Sergey", lastName: "Ivanov")
+        
+        usersObject.registerUserWith(user: userToRegister) { [weak self] (response: DataResponse<RegisterResult>) in
             switch response.result {
             case .success(let registerResult):
                 if registerResult.result != 1 {
                     XCTFail("Unknown registerResult")
                 }
-                break
             case .failure(let error):
                 XCTFail(error.localizedDescription)
             }
@@ -94,13 +94,14 @@ class UsersTests: XCTestCase {
     }
     
     func testChangeUserData() {
-        usersObject.changeUserDataBy(id: 1, firstName: "Test", lastName: "Last", userLogin: "test", userPassword: "54321", userEmail: "test@mail.com") { [weak self] (response: DataResponse<ChangeUserDataResult>) in
+        let userToChange = User(userId: 1, login: "test", password: "54321", email: "i@sergeev.com", firstName: "Ivan", lastName: "Sergeev")
+        
+        usersObject.changeUserFrom(user: userToChange) { [weak self] (response: DataResponse<ChangeUserDataResult>) in
             switch response.result {
             case .success(let changeUserDataResult):
                 if changeUserDataResult.result != 1 {
                     XCTFail("Unknown ChangeUserDataResult")
                 }
-                break
             case .failure(let error):
                 XCTFail(error.localizedDescription)
             }

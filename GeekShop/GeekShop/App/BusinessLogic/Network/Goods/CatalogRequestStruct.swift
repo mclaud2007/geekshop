@@ -14,7 +14,7 @@ extension Catalog {
         var baseUrl: URL
         var method: HTTPMethod = .get
         var path: String = "list"
-        var parameters: Parameters? = nil
+        var parameters: Parameters?
     }
     
     struct GoodById: RequestRouter {
@@ -28,7 +28,6 @@ extension Catalog {
                 "id": productId
             ]
         }
-        
-    
+
     }
 }

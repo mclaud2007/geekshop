@@ -8,16 +8,18 @@
 import Foundation
 import Vapor
 
+typealias Product = Dictionary<String,Any>
+
 class Catalog {
     let resulter = ShowResults()
-    let catalogDB: [Dictionary<String,Any>] = [["id_product": 123,
-                                              "product_name": "Ноутбук",
-                                              "price": 45600,
-                                              "product_description": "Мощный игровой ноутбук"],
-                                             ["id_product": 456,
-                                              "product_name": "Мышка",
-                                              "price": 1000,
-                                              "product_description": "Мощная игровая мышка"]]
+    let catalogDB: [Product] = [["id_product": 123,
+                                 "product_name": "Ноутбук",
+                                 "price": 45600,
+                                 "product_description": "Мощный игровой ноутбук"],
+                                ["id_product": 456,
+                                 "product_name": "Мышка",
+                                 "price": 1000,
+                                 "product_description": "Мощная игровая мышка"]]
     
     struct CatalogGetParam: Content {
         var id: Int?
@@ -35,8 +37,8 @@ class Catalog {
     }
     
     func list(_ queryString: URLQueryContainer? = nil) -> String {
-        var resultList: [Dictionary<String,Any>] = []
-        var good: Dictionary<String,Any>
+        var resultList: [Product] = []
+        var good: Product
         
         for var product in catalogDB {
             // Внезапно в списке товаров не нужно описание :)
@@ -50,12 +52,7 @@ class Catalog {
         return resulter.returnArrayResult(resultList)
     }
     
-    func product(_ queryString: URLQueryContainer? = nil) -> String {
-        guard let query = try? queryString?.get(CatalogGetParam.self),
-            let productId = query.id else {
-            return resulter.returnError(message: "Good not found")
-        }
-        
+    func productBy(_ productId: Int) -> [Product]? {
         // Ищем запрошенный товар
         let product = catalogDB.filter { product in
             if let pID = product["id_product"] as? Int,
@@ -66,17 +63,33 @@ class Catalog {
             return false
         }
         
-        if let firstProduct = product.first,
-            let name = firstProduct["product_name"],
-            let price = firstProduct["price"],
-            let description = firstProduct["product_description"]
-        {
-            let result: Dictionary<String,Any> = ["product_name": name, "product_price": price, "product_description": description]
-            
-            return resulter.returnResult(result)
+        return product
+    }
+    
+    func product(_ queryString: URLQueryContainer? = nil) -> String {
+        guard let query = try? queryString?.get(CatalogGetParam.self),
+            let productId = query.id else {
+            return resulter.returnError(message: "Good not found")
         }
         
-        return resulter.returnError(message: "Good not found")
+        // Проверяем наличие всех необходимых данных
+        guard let product = self.productBy(productId),
+            let firstProduct = product.first,
+            let productName = firstProduct["product_name"],
+            let prodcutPrice = firstProduct["price"],
+            let productDescription = firstProduct["product_description"] else {
+                return resulter.returnError(message: "Good not found")
+        }
+        
+        // Собираем результирующий массив с описанием товара
+        let result: Product = ["product_name": productName,
+                               "product_price": prodcutPrice,
+                               "product_description": productDescription
+        ]
+        
+        // Возвращаем JSON
+        return resulter.returnResult(result)
+        
     }
 }
 

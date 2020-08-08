@@ -11,7 +11,6 @@ import Foundation
 // MARK: - LoginResult
 struct LoginResult: Codable {
     let result: Int
-    let user: User
+    let user: UserResult
     let authToken: String
 }
-

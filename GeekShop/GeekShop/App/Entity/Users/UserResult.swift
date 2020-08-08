@@ -10,7 +10,7 @@ import Foundation
 
 // MARK: - User
 struct UserResult: Codable {
-    let idUser: Int?
+    let idUser: Int
     let userLogin, userName, userLastname: String
 
     enum CodingKeys: String, CodingKey {
