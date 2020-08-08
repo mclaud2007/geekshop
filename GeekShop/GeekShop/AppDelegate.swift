@@ -146,6 +146,57 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 print(error.localizedDescription)
             }
         }
+        
+        //  Фабрика по работе с корзиной
+        let basket = requestFactory.makeBasketFactory()
+        
+        // Получение корзины
+        basket.getBasketBy(sessionId: 123) { response in
+            print("Basket")
+            
+            switch response.result {
+            case .success(let basketResult):
+                print(basketResult)
+            case .failure(let error):
+                print(error.localizedDescription)
+            }
+        }
+        
+        // Добавление товара в корзину
+        basket.addProductToBasketBy(productId: 123, sessionId: 123, quantity: 2) { response in
+            print("Add to basket")
+            
+            switch response.result {
+            case .success(let addToBasketResult):
+                print(addToBasketResult)
+            case .failure(let error):
+                print(error.localizedDescription)
+            }
+        }
+        
+        // Удаление товара из корзины
+        basket.removeProductFromBasketBy(productId: 123, sessionId: 123) { response in
+            print("Remove from basket")
+            
+            switch response.result {
+            case .success(let removeFromBasketResult):
+                print(removeFromBasketResult)
+            case .failure(let error):
+                print(error.localizedDescription)
+            }
+        }
+        
+        // Оплата корзины
+        basket.payOrderBy(sessionId: 123, paySumm: 2000) { response in
+            print("Pay basket")
+            
+            switch response.result {
+            case .success(let payBasketResult):
+                print(payBasketResult)
+            case .failure(let error):
+                print(error.localizedDescription)
+            }
+        }
 
         return true
     }

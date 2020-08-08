@@ -53,4 +53,15 @@ class RequestFactory {
         
         return container.resolve(Reviews.self)!
     }
+    
+    func makeBasketFactory() -> Basket {
+        let container = Container()
+        
+        container.register(AbstractErrorParser.self) { _ in ErrorParser() }
+        container.register(Basket.self) { resolver in
+            Basket(errorParser: resolver.resolve(AbstractErrorParser.self)!, sessionManager: self.commonSessionManager)
+        }
+        
+        return container.resolve(Basket.self)!
+    }
 }

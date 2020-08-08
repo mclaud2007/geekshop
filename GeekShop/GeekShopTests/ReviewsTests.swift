@@ -25,7 +25,7 @@ struct ReviewsErrorParserStub: AbstractErrorParser {
 }
 
 class ReviewsTests: XCTestCase {
-    let exectation = XCTestExpectation(description: "ReviewsTests")
+    let expecation = XCTestExpectation(description: "ReviewsTests")
     var errorParser: ReviewsErrorParserStub!
     let sessionManager = SessionManager(configuration: URLSessionConfiguration.default)
     var reviewObject: Reviews!
@@ -51,10 +51,10 @@ class ReviewsTests: XCTestCase {
             case .failure(let error):
                 XCTFail(error.localizedDescription)
             }
-            self?.exectation.fulfill()
+            self?.expecation.fulfill()
         }
         
-        wait(for: [exectation], timeout: timeout)
+        wait(for: [expecation], timeout: timeout)
     }
     
     func testAddReview() {
@@ -71,10 +71,10 @@ class ReviewsTests: XCTestCase {
             case .failure(let error):
                 XCTFail(error.localizedDescription)
             }
-            self?.exectation.fulfill()
+            self?.expecation.fulfill()
         }
         
-        wait(for: [exectation], timeout: timeout)
+        wait(for: [expecation], timeout: timeout)
     }
     
     func testApproveReview() {
@@ -88,10 +88,10 @@ class ReviewsTests: XCTestCase {
                 XCTFail(error.localizedDescription)
             }
             
-            self?.exectation.fulfill()
+            self?.expecation.fulfill()
         }
         
-        wait(for: [exectation], timeout: timeout)
+        wait(for: [expecation], timeout: timeout)
     }
     
     func testRemoveReview() {
@@ -105,10 +105,10 @@ class ReviewsTests: XCTestCase {
                 XCTFail(error.localizedDescription)
             }
             
-            self?.exectation.fulfill()
+            self?.expecation.fulfill()
         }
         
-        wait(for: [exectation], timeout: timeout)
+        wait(for: [expecation], timeout: timeout)
     }
 
 }
