@@ -32,6 +32,8 @@
 		07520C5824CBFA69003DDE52 /* UsersRequestFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07520C5724CBFA69003DDE52 /* UsersRequestFactory.swift */; };
 		07520C5A24CBFA8D003DDE52 /* Users.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07520C5924CBFA8D003DDE52 /* Users.swift */; };
 		07520C5C24CBFF6C003DDE52 /* UsersRequestStruct.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07520C5B24CBFF6C003DDE52 /* UsersRequestStruct.swift */; };
+		075B80B924E4486300C76DBA /* CatalogViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 075B80B824E4486300C76DBA /* CatalogViewController.swift */; };
+		075B80BB24E44B5C00C76DBA /* CatalogTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 075B80BA24E44B5C00C76DBA /* CatalogTableViewCell.swift */; };
 		0778A72124CC187F00292C29 /* ResponseCodableTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0778A72024CC187F00292C29 /* ResponseCodableTests.swift */; };
 		0778A72324CC1B3500292C29 /* UsersTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0778A72224CC1B3500292C29 /* UsersTests.swift */; };
 		07AAB87324CC287F006F14EE /* CatalogResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07AAB87224CC287F006F14EE /* CatalogResult.swift */; };
@@ -107,6 +109,8 @@
 		07520C5724CBFA69003DDE52 /* UsersRequestFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UsersRequestFactory.swift; sourceTree = "<group>"; };
 		07520C5924CBFA8D003DDE52 /* Users.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Users.swift; sourceTree = "<group>"; };
 		07520C5B24CBFF6C003DDE52 /* UsersRequestStruct.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UsersRequestStruct.swift; sourceTree = "<group>"; };
+		075B80B824E4486300C76DBA /* CatalogViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CatalogViewController.swift; sourceTree = "<group>"; };
+		075B80BA24E44B5C00C76DBA /* CatalogTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CatalogTableViewCell.swift; sourceTree = "<group>"; };
 		0778A72024CC187F00292C29 /* ResponseCodableTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResponseCodableTests.swift; sourceTree = "<group>"; };
 		0778A72224CC1B3500292C29 /* UsersTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UsersTests.swift; sourceTree = "<group>"; };
 		07AAB87224CC287F006F14EE /* CatalogResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CatalogResult.swift; sourceTree = "<group>"; };
@@ -247,6 +251,15 @@
 				071C85B924DFF06E002039E8 /* UserProfileVerifier.swift */,
 			);
 			path = Helpers;
+			sourceTree = "<group>";
+		};
+		075B80B724E4484B00C76DBA /* CatalogScreen */ = {
+			isa = PBXGroup;
+			children = (
+				075B80B824E4486300C76DBA /* CatalogViewController.swift */,
+				075B80BA24E44B5C00C76DBA /* CatalogTableViewCell.swift */,
+			);
+			path = CatalogScreen;
 			sourceTree = "<group>";
 		};
 		0778A72424CC265B00292C29 /* Users */ = {
@@ -412,6 +425,7 @@
 		07E7DD2C24C2DA240097EEE6 /* Flows */ = {
 			isa = PBXGroup;
 			children = (
+				075B80B724E4484B00C76DBA /* CatalogScreen */,
 				07226C7524DFDEA300173A97 /* ProfileScreen */,
 				07F4ADF224DEBA0700E57958 /* LoginScreen */,
 				07226C7224DF045E00173A97 /* RegisterScreen */,
@@ -746,6 +760,7 @@
 				07393BE824C482BE007A1738 /* LogoutResult.swift in Sources */,
 				07AAB87324CC287F006F14EE /* CatalogResult.swift in Sources */,
 				07226C7424DF047500173A97 /* RegisterViewController.swift in Sources */,
+				075B80B924E4486300C76DBA /* CatalogViewController.swift in Sources */,
 				07393BD724C471F9007A1738 /* ResponseCodable.swift in Sources */,
 				0705D41024D9B996002141F5 /* GetBasketResult.swift in Sources */,
 				07393BD924C47852007A1738 /* RequestRouter.swift in Sources */,
@@ -757,6 +772,7 @@
 				07E3E28824D580A3006CBA6F /* ApproveReviewResult.swift in Sources */,
 				07393BE624C4818C007A1738 /* AbstractRequestFactory.swift in Sources */,
 				07520C5C24CBFF6C003DDE52 /* UsersRequestStruct.swift in Sources */,
+				075B80BB24E44B5C00C76DBA /* CatalogTableViewCell.swift in Sources */,
 				07E3E28E24D58642006CBA6F /* ReviewsRequestStruct.swift in Sources */,
 				07AAB87524CC2928006F14EE /* ProductResult.swift in Sources */,
 				07E7DCF824C2D9810097EEE6 /* AppDelegate.swift in Sources */,
