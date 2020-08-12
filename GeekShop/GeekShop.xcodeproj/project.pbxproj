@@ -15,6 +15,9 @@
 		0705D41924D9BB5F002141F5 /* Basket.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0705D41824D9BB5F002141F5 /* Basket.swift */; };
 		0705D41B24D9BC0C002141F5 /* BasketRequestStruct.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0705D41A24D9BC0C002141F5 /* BasketRequestStruct.swift */; };
 		0705D41D24D9BE5A002141F5 /* BasketTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0705D41C24D9BE5A002141F5 /* BasketTests.swift */; };
+		071C85BA24DFF06E002039E8 /* UserProfileVerifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 071C85B924DFF06E002039E8 /* UserProfileVerifier.swift */; };
+		07226C7424DF047500173A97 /* RegisterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07226C7324DF047500173A97 /* RegisterViewController.swift */; };
+		07226C7724DFDEC500173A97 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07226C7624DFDEC500173A97 /* ProfileViewController.swift */; };
 		07393BD324C4717C007A1738 /* AbstractErrorParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07393BD224C4717C007A1738 /* AbstractErrorParser.swift */; };
 		07393BD524C471C8007A1738 /* ErrorParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07393BD424C471C8007A1738 /* ErrorParser.swift */; };
 		07393BD724C471F9007A1738 /* ResponseCodable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07393BD624C471F9007A1738 /* ResponseCodable.swift */; };
@@ -37,6 +40,8 @@
 		07AAB87A24CC2CAE006F14EE /* Catalog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07AAB87924CC2CAE006F14EE /* Catalog.swift */; };
 		07AAB87C24CC2E1F006F14EE /* CatalogRequestFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07AAB87B24CC2E1F006F14EE /* CatalogRequestFactory.swift */; };
 		07AAB87E24CC2EE7006F14EE /* CatalogRequestStruct.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07AAB87D24CC2EE7006F14EE /* CatalogRequestStruct.swift */; };
+		07B0DE9824DEFC5700AEE058 /* UIViewController+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07B0DE9724DEFC5700AEE058 /* UIViewController+Ext.swift */; };
+		07BE4D5D24DFFB1B00CA9995 /* GetUserDataResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07BE4D5C24DFFB1B00CA9995 /* GetUserDataResult.swift */; };
 		07E3E27C24D5777B006CBA6F /* UserStruct.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07E3E27B24D5777B006CBA6F /* UserStruct.swift */; };
 		07E3E27F24D57E75006CBA6F /* RewievsRequestFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07E3E27E24D57E75006CBA6F /* RewievsRequestFactory.swift */; };
 		07E3E28224D57EF3006CBA6F /* GetReviewsResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07E3E28124D57EF3006CBA6F /* GetReviewsResult.swift */; };
@@ -52,6 +57,8 @@
 		07E7DD0124C2D9820097EEE6 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 07E7DD0024C2D9820097EEE6 /* Assets.xcassets */; };
 		07E7DD0424C2D9820097EEE6 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 07E7DD0224C2D9820097EEE6 /* LaunchScreen.storyboard */; };
 		07E7DD1A24C2D9830097EEE6 /* GeekShopUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07E7DD1924C2D9830097EEE6 /* GeekShopUITests.swift */; };
+		07F4ADF124DEB92800E57958 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 07F4ADF024DEB92800E57958 /* Main.storyboard */; };
+		07F4ADF424DEBA3100E57958 /* LoginScreenController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07F4ADF324DEBA3100E57958 /* LoginScreenController.swift */; };
 		3E854C4E947216D5509B1012 /* Pods_GeekShopTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E656A089303AC4F5EAA42D68 /* Pods_GeekShopTests.framework */; };
 		A1B2A995DE20AA9282D2381F /* Pods_GeekShop_GeekShopUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 104C032B93F3FE558442B7BC /* Pods_GeekShop_GeekShopUITests.framework */; };
 		E2750E7D58BB1CD389B119D7 /* Pods_GeekShop.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DA8BC7674A03BD93F3282E14 /* Pods_GeekShop.framework */; };
@@ -83,6 +90,9 @@
 		0705D41824D9BB5F002141F5 /* Basket.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Basket.swift; sourceTree = "<group>"; };
 		0705D41A24D9BC0C002141F5 /* BasketRequestStruct.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasketRequestStruct.swift; sourceTree = "<group>"; };
 		0705D41C24D9BE5A002141F5 /* BasketTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasketTests.swift; sourceTree = "<group>"; };
+		071C85B924DFF06E002039E8 /* UserProfileVerifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfileVerifier.swift; sourceTree = "<group>"; };
+		07226C7324DF047500173A97 /* RegisterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterViewController.swift; sourceTree = "<group>"; };
+		07226C7624DFDEC500173A97 /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		07393BD224C4717C007A1738 /* AbstractErrorParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AbstractErrorParser.swift; sourceTree = "<group>"; };
 		07393BD424C471C8007A1738 /* ErrorParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorParser.swift; sourceTree = "<group>"; };
 		07393BD624C471F9007A1738 /* ResponseCodable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResponseCodable.swift; sourceTree = "<group>"; };
@@ -105,6 +115,8 @@
 		07AAB87924CC2CAE006F14EE /* Catalog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Catalog.swift; sourceTree = "<group>"; };
 		07AAB87B24CC2E1F006F14EE /* CatalogRequestFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CatalogRequestFactory.swift; sourceTree = "<group>"; };
 		07AAB87D24CC2EE7006F14EE /* CatalogRequestStruct.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CatalogRequestStruct.swift; sourceTree = "<group>"; };
+		07B0DE9724DEFC5700AEE058 /* UIViewController+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Ext.swift"; sourceTree = "<group>"; };
+		07BE4D5C24DFFB1B00CA9995 /* GetUserDataResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetUserDataResult.swift; sourceTree = "<group>"; };
 		07E3E27B24D5777B006CBA6F /* UserStruct.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserStruct.swift; sourceTree = "<group>"; };
 		07E3E27E24D57E75006CBA6F /* RewievsRequestFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RewievsRequestFactory.swift; sourceTree = "<group>"; };
 		07E3E28124D57EF3006CBA6F /* GetReviewsResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetReviewsResult.swift; sourceTree = "<group>"; };
@@ -126,6 +138,8 @@
 		07E7DD1524C2D9830097EEE6 /* GeekShopUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = GeekShopUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		07E7DD1924C2D9830097EEE6 /* GeekShopUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeekShopUITests.swift; sourceTree = "<group>"; };
 		07E7DD1B24C2D9830097EEE6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		07F4ADF024DEB92800E57958 /* Main.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
+		07F4ADF324DEBA3100E57958 /* LoginScreenController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginScreenController.swift; sourceTree = "<group>"; };
 		104C032B93F3FE558442B7BC /* Pods_GeekShop_GeekShopUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_GeekShop_GeekShopUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		106FB099512EF0C8BBF87F9B /* Pods-GeekShop.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GeekShop.release.xcconfig"; path = "Target Support Files/Pods-GeekShop/Pods-GeekShop.release.xcconfig"; sourceTree = "<group>"; };
 		2716FC50453C412DA13C66BC /* Pods-GeekShop.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GeekShop.debug.xcconfig"; path = "Target Support Files/Pods-GeekShop/Pods-GeekShop.debug.xcconfig"; sourceTree = "<group>"; };
@@ -186,6 +200,22 @@
 			path = Basket;
 			sourceTree = "<group>";
 		};
+		07226C7224DF045E00173A97 /* RegisterScreen */ = {
+			isa = PBXGroup;
+			children = (
+				07226C7324DF047500173A97 /* RegisterViewController.swift */,
+			);
+			path = RegisterScreen;
+			sourceTree = "<group>";
+		};
+		07226C7524DFDEA300173A97 /* ProfileScreen */ = {
+			isa = PBXGroup;
+			children = (
+				07226C7624DFDEC500173A97 /* ProfileViewController.swift */,
+			);
+			path = ProfileScreen;
+			sourceTree = "<group>";
+		};
 		07393BD124C47156007A1738 /* Network */ = {
 			isa = PBXGroup;
 			children = (
@@ -208,6 +238,15 @@
 				0778A72424CC265B00292C29 /* Users */,
 			);
 			path = Network;
+			sourceTree = "<group>";
+		};
+		074C118A24DEFBDC00C0F389 /* Helpers */ = {
+			isa = PBXGroup;
+			children = (
+				07B0DE9724DEFC5700AEE058 /* UIViewController+Ext.swift */,
+				071C85B924DFF06E002039E8 /* UserProfileVerifier.swift */,
+			);
+			path = Helpers;
 			sourceTree = "<group>";
 		};
 		0778A72424CC265B00292C29 /* Users */ = {
@@ -247,6 +286,7 @@
 				07393BDA24C4794F007A1738 /* LoginResult.swift */,
 				07393BE724C482BE007A1738 /* LogoutResult.swift */,
 				07393BEF24C4AE4D007A1738 /* ChangeUserDataResult.swift */,
+				07BE4D5C24DFFB1B00CA9995 /* GetUserDataResult.swift */,
 				07E3E27B24D5777B006CBA6F /* UserStruct.swift */,
 			);
 			path = Users;
@@ -345,6 +385,7 @@
 		07E7DD2824C2D9D50097EEE6 /* Core */ = {
 			isa = PBXGroup;
 			children = (
+				074C118A24DEFBDC00C0F389 /* Helpers */,
 				07393BD124C47156007A1738 /* Network */,
 			);
 			path = Core;
@@ -355,6 +396,7 @@
 			children = (
 				07E7DD0024C2D9820097EEE6 /* Assets.xcassets */,
 				07E7DD0224C2D9820097EEE6 /* LaunchScreen.storyboard */,
+				07F4ADF024DEB92800E57958 /* Main.storyboard */,
 				07E7DD0524C2D9820097EEE6 /* Info.plist */,
 			);
 			path = Resources;
@@ -370,6 +412,9 @@
 		07E7DD2C24C2DA240097EEE6 /* Flows */ = {
 			isa = PBXGroup;
 			children = (
+				07226C7524DFDEA300173A97 /* ProfileScreen */,
+				07F4ADF224DEBA0700E57958 /* LoginScreen */,
+				07226C7224DF045E00173A97 /* RegisterScreen */,
 			);
 			path = Flows;
 			sourceTree = "<group>";
@@ -398,6 +443,14 @@
 				07393BDC24C47B50007A1738 /* Network */,
 			);
 			path = BusinessLogic;
+			sourceTree = "<group>";
+		};
+		07F4ADF224DEBA0700E57958 /* LoginScreen */ = {
+			isa = PBXGroup;
+			children = (
+				07F4ADF324DEBA3100E57958 /* LoginScreenController.swift */,
+			);
+			path = LoginScreen;
 			sourceTree = "<group>";
 		};
 		B27E03B9724EACCABF4C2CBF /* Frameworks */ = {
@@ -533,6 +586,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				07F4ADF124DEB92800E57958 /* Main.storyboard in Resources */,
 				07E7DD0424C2D9820097EEE6 /* LaunchScreen.storyboard in Resources */,
 				07E7DD0124C2D9820097EEE6 /* Assets.xcassets in Resources */,
 			);
@@ -687,13 +741,17 @@
 				07AAB87E24CC2EE7006F14EE /* CatalogRequestStruct.swift in Sources */,
 				07393BDB24C4794F007A1738 /* LoginResult.swift in Sources */,
 				07393BEE24C4AA46007A1738 /* RegisterResult.swift in Sources */,
+				07F4ADF424DEBA3100E57958 /* LoginScreenController.swift in Sources */,
 				07E3E28224D57EF3006CBA6F /* GetReviewsResult.swift in Sources */,
 				07393BE824C482BE007A1738 /* LogoutResult.swift in Sources */,
 				07AAB87324CC287F006F14EE /* CatalogResult.swift in Sources */,
+				07226C7424DF047500173A97 /* RegisterViewController.swift in Sources */,
 				07393BD724C471F9007A1738 /* ResponseCodable.swift in Sources */,
 				0705D41024D9B996002141F5 /* GetBasketResult.swift in Sources */,
 				07393BD924C47852007A1738 /* RequestRouter.swift in Sources */,
+				07B0DE9824DEFC5700AEE058 /* UIViewController+Ext.swift in Sources */,
 				07E3E28A24D58101006CBA6F /* RemoveReviewResult.swift in Sources */,
+				07226C7724DFDEC500173A97 /* ProfileViewController.swift in Sources */,
 				07E3E28424D57FAC006CBA6F /* Review.swift in Sources */,
 				07520C5824CBFA69003DDE52 /* UsersRequestFactory.swift in Sources */,
 				07E3E28824D580A3006CBA6F /* ApproveReviewResult.swift in Sources */,
@@ -716,6 +774,8 @@
 				07393BE424C4801E007A1738 /* UserResult.swift in Sources */,
 				0705D41924D9BB5F002141F5 /* Basket.swift in Sources */,
 				0705D41524D9BAEB002141F5 /* RemoveFromBasketResult.swift in Sources */,
+				07BE4D5D24DFFB1B00CA9995 /* GetUserDataResult.swift in Sources */,
+				071C85BA24DFF06E002039E8 /* UserProfileVerifier.swift in Sources */,
 				07520C5A24CBFA8D003DDE52 /* Users.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

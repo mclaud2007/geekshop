@@ -43,7 +43,7 @@ class BasketTests: XCTestCase {
     }
     
     func testGetBasket() {
-        basketObject.getBasketBy(sessionId: 123) { [weak self] (response: DataResponse<GetBasketResult>) in
+        basketObject.getBasketBy(userId: 1) { [weak self] (response: DataResponse<GetBasketResult>) in
             switch response.result {
             case .success(_):
                 break
@@ -57,7 +57,7 @@ class BasketTests: XCTestCase {
     }
     
     func testAddToBasket() {
-        basketObject.addProductToBasketBy(productId: 123, sessionId: 123, quantity: 2) { [weak self] (response: DataResponse<AddToBasketResult>) in
+        basketObject.addProductToBasketBy(productId: 1, userId: 1, quantity: 2) { [weak self] (response: DataResponse<AddToBasketResult>) in
             switch response.result {
             case .success(let addToBasket):
                 if addToBasket.result != 1 {
@@ -73,7 +73,7 @@ class BasketTests: XCTestCase {
     }
     
     func testRemoveFromBasket() {
-        basketObject.removeProductFromBasketBy(productId: 456, sessionId: 123) { [weak self] (response: DataResponse<RemoveFromBasketResult>) in
+        basketObject.removeProductFromBasketBy(productId: 1, userId: 1) { [weak self] (response: DataResponse<RemoveFromBasketResult>) in
             switch response.result {
             case .success(let removeFromBasket):
                 if removeFromBasket.result != 1 {
@@ -89,7 +89,7 @@ class BasketTests: XCTestCase {
     }
     
     func testPayOrder() {
-        basketObject.payOrderBy(sessionId: 123, paySumm: 2000) { [weak self] (response: DataResponse<PayOrderResult>) in
+        basketObject.payOrderBy(userId: 1, paySumm: 229970) { [weak self] (response: DataResponse<PayOrderResult>) in
             switch response.result {
             case .success(let payOrderResult):
                 if payOrderResult.result != 1 {

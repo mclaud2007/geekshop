@@ -61,7 +61,7 @@ class CatalogTests: XCTestCase {
     }
     
     func testGoodById() {
-        catalogObject.getProductBy(productId: 123) { [weak self] (response: DataResponse<ProductResult>) in
+        catalogObject.getProductBy(productId: 1) { [weak self] (response: DataResponse<ProductResult>) in
             switch response.result {
             case .success(let goodResult):
                 if goodResult.productDescription.isEmpty {
