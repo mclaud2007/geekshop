@@ -47,6 +47,7 @@ class Catalog {
                         
                         return ["id_product": idProduct,
                                 "product_name": productName,
+                                "product_image": ((item.$productImage.value ?? "") ?? ""),
                                 "price": price]
                     } else {
                         return [:]
@@ -81,7 +82,8 @@ class Catalog {
                 
                 return ["product_name": productName,
                         "product_price": productPrice,
-                        "product_description":productDescription
+                        "product_description":productDescription,
+                        "product_image": ((catalog.$productImage.value ?? "") ?? "")
                 ]
             } else {
                 return nil

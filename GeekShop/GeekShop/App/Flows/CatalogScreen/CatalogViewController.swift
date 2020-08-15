@@ -43,7 +43,16 @@ class CatalogViewController: UIViewController {
 extension CatalogViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         80
-    }    
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        
+        if let productVC = storyboard.instantiateViewController(identifier: "productPage") as? ProductViewController {
+            productVC.productID = productList[indexPath.row].idProduct
+            navigationController?.pushViewController(productVC, animated: true)
+        }
+    }
 }
 
 extension CatalogViewController: UITableViewDataSource {
@@ -57,6 +66,7 @@ extension CatalogViewController: UITableViewDataSource {
         }
         
         cell.configureWith(product: productList[indexPath.row])
+        tableView.deselectRow(at: indexPath, animated: false)
         
         return cell
     }

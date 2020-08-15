@@ -17,6 +17,8 @@ class LoginScreenController: UIViewController {
     
     // MARK: Properties
     let userFactory = RequestFactory().makeUsersFactory()
+    let session = Session.shared
+
     var userId: Int?
     var authToken: String?
     
@@ -97,12 +99,15 @@ class LoginScreenController: UIViewController {
                 return
         }
                 
-        userFactory.loginWith(userLogin: login, userPassword: password) { response in
+        userFactory.loginWith(userLogin: login, userPassword: password) { [weak self] response in
+            guard let self = self else { return }
+            
             switch response.result {
             case .success(let login):
                 DispatchQueue.main.async {
                     self.userId = login.user.idUser
                     self.authToken = login.authToken
+                    self.session.setUserInfo(login.user)
                     
                     self.performSegue(withIdentifier: "enter", sender: self)
                 }

@@ -42,6 +42,10 @@
 		07AAB87A24CC2CAE006F14EE /* Catalog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07AAB87924CC2CAE006F14EE /* Catalog.swift */; };
 		07AAB87C24CC2E1F006F14EE /* CatalogRequestFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07AAB87B24CC2E1F006F14EE /* CatalogRequestFactory.swift */; };
 		07AAB87E24CC2EE7006F14EE /* CatalogRequestStruct.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07AAB87D24CC2EE7006F14EE /* CatalogRequestStruct.swift */; };
+		07AC948524E7E24D009B2C8F /* ProductViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07AC948424E7E24D009B2C8F /* ProductViewController.swift */; };
+		07AC948924E7F21E009B2C8F /* ProductReviewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07AC948824E7F21E009B2C8F /* ProductReviewCell.swift */; };
+		07AC948C24E80082009B2C8F /* AddReviewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07AC948B24E80082009B2C8F /* AddReviewController.swift */; };
+		07AC948E24E80458009B2C8F /* Session.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07AC948D24E80458009B2C8F /* Session.swift */; };
 		07B0DE9824DEFC5700AEE058 /* UIViewController+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07B0DE9724DEFC5700AEE058 /* UIViewController+Ext.swift */; };
 		07BE4D5D24DFFB1B00CA9995 /* GetUserDataResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07BE4D5C24DFFB1B00CA9995 /* GetUserDataResult.swift */; };
 		07E3E27C24D5777B006CBA6F /* UserStruct.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07E3E27B24D5777B006CBA6F /* UserStruct.swift */; };
@@ -119,6 +123,10 @@
 		07AAB87924CC2CAE006F14EE /* Catalog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Catalog.swift; sourceTree = "<group>"; };
 		07AAB87B24CC2E1F006F14EE /* CatalogRequestFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CatalogRequestFactory.swift; sourceTree = "<group>"; };
 		07AAB87D24CC2EE7006F14EE /* CatalogRequestStruct.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CatalogRequestStruct.swift; sourceTree = "<group>"; };
+		07AC948424E7E24D009B2C8F /* ProductViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductViewController.swift; sourceTree = "<group>"; };
+		07AC948824E7F21E009B2C8F /* ProductReviewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductReviewCell.swift; sourceTree = "<group>"; };
+		07AC948B24E80082009B2C8F /* AddReviewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddReviewController.swift; sourceTree = "<group>"; };
+		07AC948D24E80458009B2C8F /* Session.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Session.swift; sourceTree = "<group>"; };
 		07B0DE9724DEFC5700AEE058 /* UIViewController+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Ext.swift"; sourceTree = "<group>"; };
 		07BE4D5C24DFFB1B00CA9995 /* GetUserDataResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetUserDataResult.swift; sourceTree = "<group>"; };
 		07E3E27B24D5777B006CBA6F /* UserStruct.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserStruct.swift; sourceTree = "<group>"; };
@@ -291,6 +299,23 @@
 			path = Goods;
 			sourceTree = "<group>";
 		};
+		07AC948324E7E22A009B2C8F /* ProductScreen */ = {
+			isa = PBXGroup;
+			children = (
+				07AC948424E7E24D009B2C8F /* ProductViewController.swift */,
+				07AC948824E7F21E009B2C8F /* ProductReviewCell.swift */,
+			);
+			path = ProductScreen;
+			sourceTree = "<group>";
+		};
+		07AC948A24E80060009B2C8F /* ReviewAddScreen */ = {
+			isa = PBXGroup;
+			children = (
+				07AC948B24E80082009B2C8F /* AddReviewController.swift */,
+			);
+			path = ReviewAddScreen;
+			sourceTree = "<group>";
+		};
 		07B38C0E24CC0331005E0413 /* Users */ = {
 			isa = PBXGroup;
 			children = (
@@ -425,6 +450,8 @@
 		07E7DD2C24C2DA240097EEE6 /* Flows */ = {
 			isa = PBXGroup;
 			children = (
+				07AC948A24E80060009B2C8F /* ReviewAddScreen */,
+				07AC948324E7E22A009B2C8F /* ProductScreen */,
 				075B80B724E4484B00C76DBA /* CatalogScreen */,
 				07226C7524DFDEA300173A97 /* ProfileScreen */,
 				07F4ADF224DEBA0700E57958 /* LoginScreen */,
@@ -455,6 +482,7 @@
 			isa = PBXGroup;
 			children = (
 				07393BDC24C47B50007A1738 /* Network */,
+				07AC948D24E80458009B2C8F /* Session.swift */,
 			);
 			path = BusinessLogic;
 			sourceTree = "<group>";
@@ -758,9 +786,11 @@
 				07F4ADF424DEBA3100E57958 /* LoginScreenController.swift in Sources */,
 				07E3E28224D57EF3006CBA6F /* GetReviewsResult.swift in Sources */,
 				07393BE824C482BE007A1738 /* LogoutResult.swift in Sources */,
+				07AC948924E7F21E009B2C8F /* ProductReviewCell.swift in Sources */,
 				07AAB87324CC287F006F14EE /* CatalogResult.swift in Sources */,
 				07226C7424DF047500173A97 /* RegisterViewController.swift in Sources */,
 				075B80B924E4486300C76DBA /* CatalogViewController.swift in Sources */,
+				07AC948E24E80458009B2C8F /* Session.swift in Sources */,
 				07393BD724C471F9007A1738 /* ResponseCodable.swift in Sources */,
 				0705D41024D9B996002141F5 /* GetBasketResult.swift in Sources */,
 				07393BD924C47852007A1738 /* RequestRouter.swift in Sources */,
@@ -770,6 +800,7 @@
 				07E3E28424D57FAC006CBA6F /* Review.swift in Sources */,
 				07520C5824CBFA69003DDE52 /* UsersRequestFactory.swift in Sources */,
 				07E3E28824D580A3006CBA6F /* ApproveReviewResult.swift in Sources */,
+				07AC948524E7E24D009B2C8F /* ProductViewController.swift in Sources */,
 				07393BE624C4818C007A1738 /* AbstractRequestFactory.swift in Sources */,
 				07520C5C24CBFF6C003DDE52 /* UsersRequestStruct.swift in Sources */,
 				075B80BB24E44B5C00C76DBA /* CatalogTableViewCell.swift in Sources */,
@@ -781,6 +812,7 @@
 				07AAB87C24CC2E1F006F14EE /* CatalogRequestFactory.swift in Sources */,
 				07E7DCFA24C2D9810097EEE6 /* SceneDelegate.swift in Sources */,
 				07E3E27C24D5777B006CBA6F /* UserStruct.swift in Sources */,
+				07AC948C24E80082009B2C8F /* AddReviewController.swift in Sources */,
 				07393BE224C47F04007A1738 /* RequestFactory.swift in Sources */,
 				0705D40E24D9B82D002141F5 /* BasketRequestFactory.swift in Sources */,
 				07E3E27F24D57E75006CBA6F /* RewievsRequestFactory.swift in Sources */,

@@ -13,17 +13,20 @@ class CatalogTableViewCell: UITableViewCell {
     @IBOutlet weak var lblTitle: UILabel!
     @IBOutlet weak var lblDescription: UILabel!
     @IBOutlet weak var lblPrice: UILabel!
+    var productId: Int?
     
     override func prepareForReuse() {
         self.lblPrice.text = nil
         self.lblDescription.text = nil
         self.lblTitle.text = nil
+        self.productId = nil
     }
     
     func configureWith(product: Product) {
         self.lblPrice.text = String(product.productPrice)
         self.lblDescription.text = product.productName
         self.lblTitle.text = product.productName
+        self.productId = product.idProduct
     }
 
 }

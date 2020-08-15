@@ -5,7 +5,7 @@ import Vapor
 // configures your application
 public func configure(_ app: Application) throws {
     // uncomment to serve files from /Public folder
-    app.databases.use(.sqlite(.file("db.sqlite")), as: .sqlite)
+    app.databases.use(.sqlite(.file("db_new.sqlite")), as: .sqlite)
     
     app.migrations.add(UserList())
     app.migrations.add(CatalogList())

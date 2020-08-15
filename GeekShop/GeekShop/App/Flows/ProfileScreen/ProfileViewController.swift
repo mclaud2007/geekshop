@@ -54,19 +54,26 @@ class ProfileViewController: UIViewController {
                                                     txtFirstName: lblFirstNameError])
         
         if let userId = userId {
-            userFactory.getUserBy(userId: userId) { response in
+            userFactory.getUserBy(userId: userId) { [weak self] response in
+                guard let self = self else { return }
+                
                 switch response.result {
                 case let .success(userData):
-                    // Пользователя найден - показываем кнопку сохранить и заполняем форму
-                    self.btnSave.isHidden = false
-                    self.txtEmail.text = userData.userEmail
-                    self.txtFirstName.text = userData.firstName
-                    self.txtLastName.text = userData.lastName
-                    self.txtPassword.text = userData.userPassword
-                    self.txtNewPassword.text = userData.userPassword
+                    DispatchQueue.main.async {
+                        // Пользователя найден - показываем кнопку сохранить и заполняем форму
+                        self.btnSave.isHidden = false
+                        self.txtEmail.text = userData.userEmail
+                        self.txtFirstName.text = userData.firstName
+                        self.txtLastName.text = userData.lastName
+                        self.txtPassword.text = userData.userPassword
+                        self.txtNewPassword.text = userData.userPassword
+                    }
                     
                 case .failure(_):
-                    self.showErrorMessage(message: "Во время загрузки профиля произошла ошибка", title: "Ошибка") 
+                    DispatchQueue.main.async {
+                        self.showErrorMessage(message: "Во время загрузки профиля произошла ошибка", title: "Ошибка")
+                        
+                    }
                 }
             }
         } else {
@@ -109,7 +116,9 @@ class ProfileViewController: UIViewController {
         // Собираем новую информацию для изменения
         let user = User(userId: userId, login: email, password: password, email: email, firstName: firstName, lastName: txtLastName.text)
         
-        userFactory.changeUserFrom(user: user) { response in
+        userFactory.changeUserFrom(user: user) { [weak self] response in
+            guard let self = self else { return }
+            
             switch response.result {
             case .success(_):
                 DispatchQueue.main.async {
