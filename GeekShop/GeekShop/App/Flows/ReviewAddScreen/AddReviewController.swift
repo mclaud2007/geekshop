@@ -8,7 +8,8 @@
 
 import UIKit
 
-class AddReviewController: UIViewController {
+class AddReviewController: BaseViewController {
+        
     @IBOutlet weak var txtUserName: UITextField!
     @IBOutlet weak var lblUserNameError: UILabel!
     
@@ -21,7 +22,6 @@ class AddReviewController: UIViewController {
     @IBOutlet weak var txtReview: UITextView!
     @IBOutlet weak var lblReviewError: UILabel!
         
-    let session = Session.shared
     let reviewFabric = RequestFactory().makeReviewsFactory()
     
     var product: ProductResult?
@@ -32,16 +32,16 @@ class AddReviewController: UIViewController {
         super.viewDidLoad()
         
         // Добавлем имя пользователя и email, если есть
-        if let userName = session.userInfo?.userName {
+        if let userName = app.session.userInfo?.userName {
             txtUserName.text = userName
             
             // Может у пользователя заполнена и фамилия
-            if let userLastName = session.userInfo?.userLastname {
+            if let userLastName = app.session.userInfo?.userLastname {
                 txtUserName.text = (txtUserName.text ?? "") + " " + userLastName
             }
         }
         
-        if let userEmail = session.userInfo?.userEmail {
+        if let userEmail = app.session.userInfo?.userEmail {
             txtEmail.text = userEmail
         }
         
@@ -55,11 +55,20 @@ class AddReviewController: UIViewController {
                                                     txtEmail: lblEmailError,
                                                     txtTitle: lblTitleError]
         )
-
+        
         // Добавляем рамку вокруг поля добавления отзыва
         txtReview.layer.borderWidth = 1
         txtReview.layer.borderColor = UIColor.systemGray3.cgColor
         txtReview.layer.cornerRadius = 8
+        
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        if isNeedLogin {
+            let needLogin = app.getScreenPage(storyboard: "Users", identifier: "needEnterScreen")
+            needLogin.modalPresentationStyle = .currentContext
+            show(needLogin, sender: self)
+        }
     }
     
     @IBAction func btnCancelClicked(_ sender: Any) {
@@ -110,5 +119,7 @@ class AddReviewController: UIViewController {
             }
         }
     }
-
+    
+    func nlRealodData() { }
+    
 }

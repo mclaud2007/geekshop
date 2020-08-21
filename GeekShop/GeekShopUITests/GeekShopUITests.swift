@@ -9,35 +9,107 @@
 import XCTest
 
 class GeekShopUITests: XCTestCase {
+    
+    var app: XCUIApplication!
 
-    override func setUpWithError() throws {
-        // Put setup code here. This method is called before the invocation of each test method in the class.
-
-        // In UI tests it is usually best to stop immediately when a failure occurs.
+    override func setUp() {
+        super.setUp()
+        
         continueAfterFailure = false
-
-        // In UI tests it’s important to set the initial state - such as interface orientation - required for your tests before they run. The setUp method is a good place to do this.
+        app = XCUIApplication()
     }
-
-    override func tearDownWithError() throws {
-        // Put teardown code here. This method is called after the invocation of each test method in the class.
-    }
-
-    func testExample() throws {
-        // UI tests must launch the application that they test.
-        let app = XCUIApplication()
+    
+    func testLoginOk() throws {
         app.launch()
 
-        // Use recording to get started writing UI tests.
-        // Use XCTAssert and related functions to verify your tests produce the correct results.
-    }
+        // Перейдем на вкладку профиль
+        app.tabBars.buttons["Профиль"].tap()
+        let elementsQuery = app.scrollViews.otherElements
+        let loginLabel = app.textFields["lblLogin"]
+        
+        // Ждем пока не появится доступ к запрошенному полю
+        let exists = NSPredicate(format: "exists == 1")
+        expectation(for: exists, evaluatedWith: loginLabel, handler: nil)
+        waitForExpectations(timeout: 5, handler: nil)
+        
+        loginLabel.tap()
+        loginLabel.typeText("test")
 
-    func testLaunchPerformance() throws {
-        if #available(macOS 10.15, iOS 13.0, tvOS 13.0, *) {
-            // This measures how long it takes to launch your application.
-            measure(metrics: [XCTOSSignpostMetric.applicationLaunch]) {
-                XCUIApplication().launch()
-            }
+        let passwordLabel = elementsQuery.secureTextFields["lblPassword"]
+        passwordLabel.tap()
+        
+        let tKey = app.keys["t"]
+        let eKey = app.keys["e"]
+        let sKey = app.keys["s"]
+        
+        // Пароль
+        tKey.tap()
+        eKey.tap()
+        sKey.tap()
+        tKey.tap()
+        
+        let btnEnter = elementsQuery.buttons["btnEnter"]
+        btnEnter.tap()
+        
+        let lblEmail = app.textFields["lblEmail"]
+        
+        // Ждем пока не появится доступ к запрошенному полю
+        expectation(for: exists, evaluatedWith: lblEmail, handler: nil)
+        waitForExpectations(timeout: 5, handler: nil)
+        
+        XCTAssertEqual(lblEmail.value as? String, "i@sergeev.com")
+        
+    }
+    
+    // Тест будет пройден когда появится ALERT с ошибкой (т.е. вход на самом деле не удастсья)
+    func testLoginFail() throws {
+        app.launch()
+
+        // Перейдем на вкладку профиль
+        app.tabBars.buttons["Профиль"].tap()
+        let elementsQuery = app.scrollViews.otherElements
+        let loginLabel = app.textFields["lblLogin"]
+        
+        // Ждем пока не появится доступ к запрошенному полю
+        let exists = NSPredicate(format: "exists == 1")
+        expectation(for: exists, evaluatedWith: loginLabel, handler: nil)
+        waitForExpectations(timeout: 5, handler: nil)
+        
+        loginLabel.tap()
+        loginLabel.typeText("fail")
+
+        let passwordLabel = elementsQuery.secureTextFields["lblPassword"]
+        passwordLabel.tap()
+        
+        let tKey = app.keys["t"]
+        let eKey = app.keys["e"]
+        let sKey = app.keys["s"]
+        
+        // Пароль
+        tKey.tap()
+        eKey.tap()
+        sKey.tap()
+        tKey.tap()
+        
+        let btnEnter = app.buttons["btnEnter"]
+        btnEnter.tap()
+                
+        let token = addUIInterruptionMonitor(withDescription: "При попытке входа произошла ошибка") { alert in
+            alert.buttons["Ok"].tap()
+            return true
         }
+        
+        RunLoop.current.run(until: Date(timeInterval: 2, since: Date()))
+        
+        app.tap()
+        removeUIInterruptionMonitor(token)
+        
+        let lblEmail = app.textFields["lblEmail"]
+        let nonExists = NSPredicate(format: "exists == 0")
+        expectation(for: nonExists, evaluatedWith: lblEmail, handler: nil)
+        
+        // Успешно пройден
+        waitForExpectations(timeout: 5, handler: nil)
+        
     }
 }

@@ -104,16 +104,21 @@ class RegisterViewController: UIViewController {
                         }
                         
                         //  Возвращаем на экран логина
-                        self.navigationController?.popViewController(animated: true)
+                        self.dismiss(animated: true)
                     }
                 }
                 
             case .failure(_):
-                self.showErrorMessage(message: "Ошибка регистрации")
+                DispatchQueue.main.async {
+                    self.showErrorMessage(message: "Ошибка регистрации")
+                }
             }
         }
     }    
-
+    @IBAction func btnCancelClicked(_ sender: Any) {
+        //  Возвращаем на экран логина
+        self.dismiss(animated: true)
+    }    
 }
 
 extension RegisterViewController: UITextFieldDelegate {

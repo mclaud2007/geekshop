@@ -19,6 +19,8 @@ class CatalogViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        title = "Каталог"
+        
         tableView.delegate = self
         tableView.dataSource = self
 
@@ -46,12 +48,12 @@ extension CatalogViewController: UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        
-        if let productVC = storyboard.instantiateViewController(identifier: "productPage") as? ProductViewController {
+        if let productVC = AppManager.shared.getScreenPage(storyboard: "Catalog", identifier: "productDetailScreen") as? ProductViewController {
             productVC.productID = productList[indexPath.row].idProduct
             navigationController?.pushViewController(productVC, animated: true)
         }
+        
+        tableView.deselectRow(at: indexPath, animated: false)
     }
 }
 
@@ -66,7 +68,6 @@ extension CatalogViewController: UITableViewDataSource {
         }
         
         cell.configureWith(product: productList[indexPath.row])
-        tableView.deselectRow(at: indexPath, animated: false)
         
         return cell
     }
