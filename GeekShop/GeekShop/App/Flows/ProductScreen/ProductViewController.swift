@@ -9,7 +9,7 @@
 import UIKit
 import Kingfisher
 
-class ProductViewController: BaseViewController {
+class ProductViewController: BaseViewController, TrackableMixin {
     
     // MARK: Outlets
     @IBOutlet weak var imgProduct: UIImageView!
@@ -48,6 +48,8 @@ class ProductViewController: BaseViewController {
                 switch response.result {
                 case let .success(product):
                     DispatchQueue.main.async {
+                        // Записываем событие открыт товар
+                        self.track(.openProductPage(param: ["PRODUCT_ID": pID]))
                         self.productPageInitWith(product: product)
                     }
                     
@@ -89,6 +91,7 @@ class ProductViewController: BaseViewController {
                         switch response.result {
                         case .success(_):
                             DispatchQueue.main.async {
+                                self.track(.addToBasekt(param: ["PRODUCT_ID": pID]))                                
                                 self.btnAddToBasket.setTitle("В корзине", for: .normal)
                             }
                             
@@ -198,7 +201,8 @@ extension ProductViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tblReviewsList.dequeueReusableCell(withIdentifier: "productViewCell") as? ProductReviewCell else {
-            preconditionFailure()
+            assertionFailure("Can't dequeue cell withIndentifier: productViewCell")
+            return UITableViewCell()
         }
         
         cell.configureWith(review: reviewList[indexPath.section])

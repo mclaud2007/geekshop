@@ -7,32 +7,34 @@
 //
 import UIKit
 
-class RegisterViewController: UIViewController {
+class RegisterViewController: UIViewController, TrackableMixin {
     // MARK: Outlets
-    @IBOutlet weak var txtEmail: UITextField! {
+    @IBOutlet weak var fieldEmail: TextFieldView! {
         didSet {
-            txtEmail.text = userLogin
+            fieldEmail.fieldContentType = .emailAddress
         }
     }
-    @IBOutlet weak var lblEmailError: UILabel!
     
-    @IBOutlet weak var txtPassword: UITextField! {
+    @IBOutlet weak var fieldPassword: TextFieldView! {
         didSet {
-            txtPassword.text = userPassword
+            fieldPassword.fieldContentType = .password
+            fieldPassword.isSecureTextEntry = true
         }
     }
-    @IBOutlet weak var lblPasswordError: UILabel!
     
-    @IBOutlet weak var txtNewPassword: UITextField!
-    @IBOutlet weak var lblNewPasswordError: UILabel!
+    @IBOutlet weak var fieldNewPassword: TextFieldView! {
+        didSet {
+            fieldNewPassword.fieldContentType = .password
+            fieldNewPassword.isSecureTextEntry = true
+            fieldNewPassword.fieldErrorTitle = "Поле не совпадает"
+        }
+    }
     
-    @IBOutlet weak var txtFirstName: UITextField!
-    @IBOutlet weak var lblFirstNameError: UILabel!
-    
-    @IBOutlet weak var txtLastName: UITextField!
+    @IBOutlet weak var fieldFirstName: TextFieldView!
+    @IBOutlet weak var fieldLastName: TextFieldView!
     
     let userFactory = RequestFactory().makeUsersFactory()
-    var verifier: ProfileVerifier!
+    var verifier: FormVerifier!
     
     var userLogin: String?
     var userPassword: String?
@@ -48,17 +50,7 @@ class RegisterViewController: UIViewController {
         view.addGestureRecognizer(tapGesture)
         
         // Инициализируем класс проверки данных пользователя
-        verifier = ProfileVerifier(requiredFields: [txtEmail: lblEmailError,
-                                                    txtPassword: lblPasswordError,
-                                                    txtNewPassword: lblNewPasswordError,
-                                                    txtFirstName: lblFirstNameError])
-        
-        // По нажатию "Ввод" на клавиатуре будем делать тоже самое
-        txtFirstName.delegate = self
-        txtNewPassword.delegate = self
-        txtEmail.delegate = self
-        txtPassword.delegate = self
-        txtLastName.delegate = self
+        verifier = FormVerifier(required: [fieldEmail, fieldPassword, fieldNewPassword, fieldFirstName])
     }
     
     @objc private func viewClicked() {
@@ -69,30 +61,30 @@ class RegisterViewController: UIViewController {
     @IBAction func btnRegisterClicked(_ sender: Any) {
         // Для начала выключаем все строки с ошибками, если они были - дальше будем включать обратно
         verifier.reset()
-        
+
         // Выводим сообщения об ошибках
         verifier.check()
-        
+
         // Унврапим опционалы
-        guard let email = txtEmail.text, !email.isEmpty,
-            let password = txtPassword.text, !password.isEmpty,
-            let newPassword = txtNewPassword.text,
-            let firstName = txtFirstName.text, !firstName.isEmpty else {
+        guard let email = fieldEmail.fieldValue, !email.isEmpty,
+            let password = fieldPassword.fieldValue, !password.isEmpty,
+            let newPassword = fieldNewPassword.fieldValue,
+            let firstName = fieldFirstName.fieldValue, !firstName.isEmpty else {
                 return
         }
-                
+
         // Проверяем совпалили пароли
         guard password == newPassword else {
-            lblNewPasswordError.isHidden = false
+            fieldNewPassword.error()
             return
         }
-        
+
         // Создаем структуру нового пользователя
         let newUser = User(userId: nil, login: email, password: password,
                            email: email, firstName: firstName,
-                           lastName: txtLastName.text
+                           lastName: fieldLastName.fieldValue
         )
-        
+
         // На данном этапе все необходимые сведенья существуют - можно регистрировать пользователя
         userFactory.registerUserWith(user: newUser) { response in
             switch response.result {
@@ -103,26 +95,24 @@ class RegisterViewController: UIViewController {
                             return
                         }
                         
+                        // Регистрация нового пользователя
+                        self.track(.registration)
+
                         //  Возвращаем на экран логина
                         self.dismiss(animated: true)
                     }
                 }
-                
+
             case .failure(_):
                 DispatchQueue.main.async {
                     self.showErrorMessage(message: "Ошибка регистрации")
                 }
             }
         }
-    }    
+    }
+
     @IBAction func btnCancelClicked(_ sender: Any) {
         //  Возвращаем на экран логина
         self.dismiss(animated: true)
-    }    
-}
-
-extension RegisterViewController: UITextFieldDelegate {
-    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        self.view.endEditing(true)
     }
 }

@@ -18,7 +18,7 @@ class GeekShopUITests: XCTestCase {
         continueAfterFailure = false
         app = XCUIApplication()
     }
-    
+        
     func testLoginOk() throws {
         app.launch()
 
@@ -51,7 +51,7 @@ class GeekShopUITests: XCTestCase {
         let btnEnter = elementsQuery.buttons["btnEnter"]
         btnEnter.tap()
         
-        let lblEmail = app.textFields["lblEmail"]
+        let lblEmail = app.otherElements["lblEmail"].children(matching: .other).element.children(matching: .textField).element
         
         // Ждем пока не появится доступ к запрошенному полю
         expectation(for: exists, evaluatedWith: lblEmail, handler: nil)

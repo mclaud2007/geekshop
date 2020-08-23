@@ -60,3 +60,11 @@ final class AppManager {
         return storyboard.instantiateViewController(identifier: identifier)
     }
 }
+
+func assertionFailed(message: String) {
+    #if DEBUG
+    Swift.assertionFailure(message)
+    #else
+    
+    #endif
+}
