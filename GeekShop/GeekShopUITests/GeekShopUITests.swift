@@ -36,17 +36,10 @@ class GeekShopUITests: XCTestCase {
         loginLabel.typeText("test")
 
         let passwordLabel = elementsQuery.secureTextFields["lblPassword"]
+        sleep(2)
         passwordLabel.tap()
-        
-        let tKey = app.keys["t"]
-        let eKey = app.keys["e"]
-        let sKey = app.keys["s"]
-        
-        // Пароль
-        tKey.tap()
-        eKey.tap()
-        sKey.tap()
-        tKey.tap()
+        passwordLabel.typeText("test")
+        sleep(2)
         
         let btnEnter = elementsQuery.buttons["btnEnter"]
         btnEnter.tap()
@@ -79,17 +72,10 @@ class GeekShopUITests: XCTestCase {
         loginLabel.typeText("fail")
 
         let passwordLabel = elementsQuery.secureTextFields["lblPassword"]
+        sleep(2)
         passwordLabel.tap()
-        
-        let tKey = app.keys["t"]
-        let eKey = app.keys["e"]
-        let sKey = app.keys["s"]
-        
-        // Пароль
-        tKey.tap()
-        eKey.tap()
-        sKey.tap()
-        tKey.tap()
+        passwordLabel.typeText("test")
+        sleep(2)
         
         let btnEnter = app.buttons["btnEnter"]
         btnEnter.tap()
