@@ -43,10 +43,13 @@ class Catalog {
                 return catalog.map { item -> [String: Any] in
                     if let idProduct = item.$idProduct.value,
                         let productName = item.$productName.value,
+                        let productDescription = item.$productDescription.value,
                         let price = item.$price.value {
                         
                         return ["id_product": idProduct,
                                 "product_name": productName,
+                                "product_image": ((item.$productImage.value ?? "") ?? ""),
+                                "product_description": productDescription,
                                 "price": price]
                     } else {
                         return [:]
@@ -81,7 +84,8 @@ class Catalog {
                 
                 return ["product_name": productName,
                         "product_price": productPrice,
-                        "product_description":productDescription
+                        "product_description":productDescription,
+                        "product_image": ((catalog.$productImage.value ?? "") ?? "")
                 ]
             } else {
                 return nil

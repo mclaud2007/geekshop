@@ -71,6 +71,18 @@ extension Basket {
                 "paySumm": paySumm
             ]
         }
+    }
+    
+    struct ClearBasketData: RequestRouter {
+        var baseUrl: URL
+        var method: HTTPMethod = .get
+        var path: String = "clear"
         
+        let userId: Int
+        var parameters: Parameters? {
+            return [
+                "userId": userId
+            ]
+        }
     }
 }

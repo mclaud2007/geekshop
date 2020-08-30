@@ -22,4 +22,7 @@ protocol BasketRequestFactory: AbstractRequestFactory {
     
     // Оплата заказа
     func payOrderBy(userId: Int, paySumm: Int, completion: @escaping (Alamofire.DataResponse<PayOrderResult>) -> Void)
+    
+    // Полная очистка корзины
+    func clearBasketFrom(userId: Int, completion: @escaping (DataResponse<ClearBasketResult>) -> Void)
 }

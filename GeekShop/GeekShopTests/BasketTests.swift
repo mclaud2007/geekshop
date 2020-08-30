@@ -35,11 +35,32 @@ class BasketTests: XCTestCase {
     override func setUp() {
         errorParser = BasketErrorParserStub()
         basketObject = Basket.init(errorParser: errorParser, sessionManager: sessionManager)
+        
+        // Добавляем тестовый товар
+        basketObject.addProductToBasketBy(productId: 1, userId: 1, quantity: 1) { _ in }
     }
     
     override func tearDown() {
+        // Очищаем корзину
+//        basketObject.clearBasketFrom(userId: 1) { _ in  }
         errorParser = nil
         basketObject = nil
+    }
+    
+    func testAddToBasket() {
+        basketObject.addProductToBasketBy(productId: 1, userId: 1, quantity: 1) { [weak self] (response: DataResponse<AddToBasketResult>) in
+            switch response.result {
+            case .success(let addToBasket):
+                if addToBasket.result != 1 {
+                    XCTFail("Fail add to basket")
+                }
+            case .failure(let error):
+                XCTFail(error.localizedDescription)
+            }
+            self?.expecation.fulfill()
+        }
+        
+        wait(for: [expecation], timeout: timeout)
     }
     
     func testGetBasket() {
@@ -56,16 +77,15 @@ class BasketTests: XCTestCase {
         wait(for: [expecation], timeout: timeout)
     }
     
-    func testAddToBasket() {
-        basketObject.addProductToBasketBy(productId: 1, userId: 1, quantity: 2) { [weak self] (response: DataResponse<AddToBasketResult>) in
+    func testPayOrder() {
+        basketObject.payOrderBy(userId: 1, paySumm: 14990) { [weak self] (response: DataResponse<PayOrderResult>) in
             switch response.result {
-            case .success(let addToBasket):
-                if addToBasket.result != 1 {
-                    XCTFail("Fail add to basket")
-                }
+            case .success(_):
+                break
             case .failure(let error):
                 XCTFail(error.localizedDescription)
             }
+            
             self?.expecation.fulfill()
         }
         
@@ -82,23 +102,6 @@ class BasketTests: XCTestCase {
             case .failure(let error):
                 XCTFail(error.localizedDescription)
             }
-            self?.expecation.fulfill()
-        }
-        
-        wait(for: [expecation], timeout: timeout)
-    }
-    
-    func testPayOrder() {
-        basketObject.payOrderBy(userId: 1, paySumm: 229970) { [weak self] (response: DataResponse<PayOrderResult>) in
-            switch response.result {
-            case .success(let payOrderResult):
-                if payOrderResult.result != 1 {
-                    XCTFail("Fail to pay")
-                }
-            case .failure(let error):
-                XCTFail(error.localizedDescription)
-            }
-            
             self?.expecation.fulfill()
         }
         
