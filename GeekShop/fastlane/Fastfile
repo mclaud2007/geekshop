@@ -1,0 +1,58 @@
+# This file contains the fastlane.tools configuration
+# You can find the documentation at https://docs.fastlane.tools
+#
+# For a list of all available actions, check out
+#
+#     https://docs.fastlane.tools/actions
+#
+# For a list of all available plugins, check out
+#
+#     https://docs.fastlane.tools/plugins/available-plugins
+#
+
+# Uncomment the line if you want fastlane to automatically update itself
+# update_fastlane
+opt_out_usage
+
+default_platform(:ios)
+
+platform :ios do
+  desc "Description of what the lane does"
+  lane :custom_lane do
+    # add actions here: https://docs.fastlane.tools/actions
+    ensure_git_status_clean
+    
+    clear_derived_data
+    xcclean(
+      scheme: "GeekShop",
+      workspace: "GeekShop.xcworkspace"
+    )
+
+    #update a dependencies
+    cocoapods(
+      use_bundle_exec: false
+    )
+
+    # run tests
+    run_tests(
+      workspace: "GeekShop.xcworkspace",
+      scheme: "GeekShop",
+      devices: ["iPhone SE (2nd generation)"]
+    )
+
+    increment_build_number
+
+    gym(
+      scheme: "GeekShop",
+      configuration: "Debug",
+      export_method: "development",
+      include_symbols: true,
+      include_bitcode: true,
+      silent: false
+    )
+
+    # make screenshots
+    capture_ios_screenshots
+
+  end
+end

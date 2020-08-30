@@ -47,4 +47,9 @@ extension Basket: BasketRequestFactory {
         self.request(request: requestModel, completionHandler: completion)
     }
     
+    func clearBasketFrom(userId: Int, completion: @escaping (DataResponse<ClearBasketResult>) -> Void) {
+        let requestModel = ClearBasketData(baseUrl: baseUrl, userId: userId)
+        self.request(request: requestModel, completionHandler: completion)
+    }
+    
 }

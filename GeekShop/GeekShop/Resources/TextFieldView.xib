@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="16097.2" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="TextFieldView" customModule="GeekShop" customModuleProvider="target">
+            <connections>
+                <outlet property="contentView" destination="iN0-l3-epB" id="kto-jq-CoR"/>
+                <outlet property="lblFieldError" destination="4Y7-bq-yjd" id="4ui-dx-CA7"/>
+                <outlet property="lblFieldName" destination="7md-Ss-Xx2" id="GwV-Qz-6pX"/>
+                <outlet property="txtValue" destination="ync-oF-KHo" id="6Hw-7l-QOG"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="iN0-l3-epB" userLabel="Content View">
+            <rect key="frame" x="0.0" y="0.0" width="564" height="73"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7md-Ss-Xx2" userLabel="lblTitle">
+                    <rect key="frame" x="10" y="0.0" width="272" height="17"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                    <nil key="textColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="ync-oF-KHo" userLabel="txtValue" customClass="FormTextField" customModule="GeekShop" customModuleProvider="target">
+                    <rect key="frame" x="10" y="27" width="544" height="34"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                    <textInputTraits key="textInputTraits"/>
+                </textField>
+                <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Поле является обязательным" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4Y7-bq-yjd" userLabel="lblError">
+                    <rect key="frame" x="420" y="0.0" width="134" height="11"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="9"/>
+                    <color key="textColor" systemColor="systemRedColor" red="1" green="0.23137254900000001" blue="0.18823529410000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    <nil key="highlightedColor"/>
+                </label>
+            </subviews>
+            <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+            <constraints>
+                <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="ync-oF-KHo" secondAttribute="trailing" constant="10" id="L2q-dm-UF7"/>
+                <constraint firstItem="ync-oF-KHo" firstAttribute="top" secondItem="7md-Ss-Xx2" secondAttribute="bottom" constant="10" id="NTu-eI-4Vb"/>
+                <constraint firstItem="4Y7-bq-yjd" firstAttribute="top" secondItem="7md-Ss-Xx2" secondAttribute="top" id="VgT-8b-eSZ"/>
+                <constraint firstItem="ync-oF-KHo" firstAttribute="leading" secondItem="7md-Ss-Xx2" secondAttribute="leading" id="WdQ-Hj-2yt"/>
+                <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="4Y7-bq-yjd" secondAttribute="trailing" constant="10" id="fE5-bW-WP4"/>
+                <constraint firstItem="7md-Ss-Xx2" firstAttribute="width" secondItem="ync-oF-KHo" secondAttribute="width" multiplier="1:2" id="fhA-l2-DaL"/>
+                <constraint firstItem="7md-Ss-Xx2" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="gFL-Sw-p0e"/>
+                <constraint firstItem="7md-Ss-Xx2" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="10" id="s8a-Uu-EOE"/>
+            </constraints>
+            <nil key="simulatedTopBarMetrics"/>
+            <nil key="simulatedBottomBarMetrics"/>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
+            <point key="canvasLocation" x="120.28985507246378" y="63.950892857142854"/>
+        </view>
+    </objects>
+</document>
