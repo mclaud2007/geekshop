@@ -8,7 +8,7 @@
 
 import UIKit
 
-class AddReviewController: BaseViewController {
+class AddReviewController: BaseViewController, TrackableMixin {
         
     @IBOutlet weak var txtUserName: UITextField!
     @IBOutlet weak var lblUserNameError: UILabel!
@@ -110,6 +110,7 @@ class AddReviewController: BaseViewController {
             switch response.result {
             case .success(_):
                 DispatchQueue.main.async {
+                    self.track(.addNewReview)                    
                     self.dismiss(animated: true)
                 }
             case .failure(_):

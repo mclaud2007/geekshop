@@ -18,7 +18,7 @@ class GeekShopUITests: XCTestCase {
         continueAfterFailure = false
         app = XCUIApplication()
     }
-    
+        
     func testLoginOk() throws {
         app.launch()
 
@@ -36,22 +36,15 @@ class GeekShopUITests: XCTestCase {
         loginLabel.typeText("test")
 
         let passwordLabel = elementsQuery.secureTextFields["lblPassword"]
+        sleep(2)
         passwordLabel.tap()
-        
-        let tKey = app.keys["t"]
-        let eKey = app.keys["e"]
-        let sKey = app.keys["s"]
-        
-        // Пароль
-        tKey.tap()
-        eKey.tap()
-        sKey.tap()
-        tKey.tap()
+        passwordLabel.typeText("test")
+        sleep(2)
         
         let btnEnter = elementsQuery.buttons["btnEnter"]
         btnEnter.tap()
         
-        let lblEmail = app.textFields["lblEmail"]
+        let lblEmail = app.otherElements["lblEmail"].children(matching: .other).element.children(matching: .textField).element
         
         // Ждем пока не появится доступ к запрошенному полю
         expectation(for: exists, evaluatedWith: lblEmail, handler: nil)
@@ -79,17 +72,10 @@ class GeekShopUITests: XCTestCase {
         loginLabel.typeText("fail")
 
         let passwordLabel = elementsQuery.secureTextFields["lblPassword"]
+        sleep(2)
         passwordLabel.tap()
-        
-        let tKey = app.keys["t"]
-        let eKey = app.keys["e"]
-        let sKey = app.keys["s"]
-        
-        // Пароль
-        tKey.tap()
-        eKey.tap()
-        sKey.tap()
-        tKey.tap()
+        passwordLabel.typeText("test")
+        sleep(2)
         
         let btnEnter = app.buttons["btnEnter"]
         btnEnter.tap()

@@ -8,7 +8,7 @@
 
 import UIKit
 
-class BasketViewController: BaseViewController {
+class BasketViewController: BaseViewController, TrackableMixin {
    
     @IBOutlet weak var tblBasket: UITableView! {
         didSet {
@@ -36,17 +36,20 @@ class BasketViewController: BaseViewController {
             loadBasket()
             
         } else {
-            btnPay.isHidden = true
-            btnClear.isHidden = true
-            tblBasket.isHidden = true
-            lblGoodsCount.isHidden = true
-            lblTotalPrice.isHidden = true
-            lblTotalPriceTitle.isHidden = true
-            lblGoodsCountTitle.isHidden = true
-
+            toggleLables(hide: true)
             login(delegate: self)
 
         }
+    }
+    
+    func toggleLables(hide: Bool = true) {
+        tblBasket.isHidden = hide
+        lblTotalPrice.isHidden = hide
+        lblTotalPriceTitle.isHidden = hide
+        lblGoodsCount.isHidden = hide
+        lblGoodsCountTitle.isHidden = hide
+        btnPay.isHidden = hide
+        btnClear.isHidden = hide
     }
     
     private func loadBasket() {
@@ -61,18 +64,13 @@ class BasketViewController: BaseViewController {
                         self.tblBasket.reloadData()
                         
                         if basketResult.countGoods > 0 {
-                            self.btnPay.isHidden = false
-                            self.btnClear.isHidden = false
-                            self.tblBasket.isHidden = false
-                            self.lblGoodsCount.isHidden = false
-                            self.lblTotalPrice.isHidden = false
-                            self.lblTotalPriceTitle.isHidden = false
-                            self.lblGoodsCountTitle.isHidden = false
+                            self.toggleLables(hide: false)
                             
                             self.lblTotalPrice.text = String(self.basket?.amount ?? 0)
                             self.lblGoodsCount.text = String(self.basket?.countGoods ?? 0)
                         } else {
                             self.lblBasketIsEmpty.isHidden = false
+                            self.toggleLables(hide: true)
                         }
                     }
                     
@@ -82,6 +80,10 @@ class BasketViewController: BaseViewController {
                     }
                 }
             }
+        } else {
+            lblBasketIsEmpty.isHidden = false
+            toggleLables(hide: true)
+            
         }
     }
        
@@ -92,6 +94,7 @@ class BasketViewController: BaseViewController {
                 
                 switch response.result {
                 case .success(_):
+                    self.track(.cleanBasket)
                     self.loadBasket()
                 case .failure(_):
                     DispatchQueue.main.async {
@@ -112,6 +115,7 @@ class BasketViewController: BaseViewController {
                 switch response.result {
                 case let .success(payResult):
                     DispatchQueue.main.async {
+                        self.track(.payBasket(param: ["PAYMENT_SUMMARY": amount]))
                         self.showErrorMessage(message: payResult.message ?? "Заказ оплачен", title: "Успех")
                     }
                     
@@ -143,7 +147,8 @@ extension BasketViewController: UITableViewDelegate, UITableViewDataSource {
        
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tblBasket.dequeueReusableCell(withIdentifier: "basketCell") as? BasketCell else {
-            preconditionFailure()
+            assertionFailure("Can't dequeue reusable cell withIdentifier: basketCell")
+            return UITableViewCell()
         }
         
         // Выводим строку с тоавром

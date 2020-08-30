@@ -9,7 +9,7 @@
 
 import UIKit
 
-class LoginScreenController: BaseViewController {
+class LoginScreenController: BaseViewController, TrackableMixin {
     // MARK: Outlets
     @IBOutlet weak var txtLogin: UITextField!
     @IBOutlet weak var txtPassword: UITextField!
@@ -26,7 +26,6 @@ class LoginScreenController: BaseViewController {
         // По клику на вью убираем клавиатуру
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(viewClicked(_:)))
         view.addGestureRecognizer(tapGesture)
-        
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -106,6 +105,9 @@ class LoginScreenController: BaseViewController {
                     self.authToken = login.authToken
                     self.app.session.setUserInfo(login.user)
                     
+                    // Записываем успешный вход
+                    self.track(.login(success: true))
+                                        
                     // Закрываем окно входа
                     self.dismiss(animated: true)
                     
@@ -115,7 +117,12 @@ class LoginScreenController: BaseViewController {
                 
             case .failure(_):
                 DispatchQueue.main.async {
+                    // Записываем сообщение об ошибке входа
+                    self.track(.login(success: false))
+                    
+                    // Показываем сообщение об ошибке
                     self.showErrorMessage(message: "При попытке входа произошлка ошибка")
+                    
                 }                
             }
         }

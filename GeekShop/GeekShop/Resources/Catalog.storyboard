@@ -374,54 +374,8 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="J7h-pJ-j8c">
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="J7h-pJ-j8c">
                                 <rect key="frame" x="0.0" y="44" width="414" height="818"/>
-                                <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
-                                <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="catalogCell" rowHeight="80" id="6uh-Zn-bc1" customClass="CatalogTableViewCell" customModule="GeekShop" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="28" width="414" height="80"/>
-                                        <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="6uh-Zn-bc1" id="xHR-ws-umZ">
-                                            <rect key="frame" x="0.0" y="0.0" width="414" height="80"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                            <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="stf-A6-52x" userLabel="lblTitle">
-                                                    <rect key="frame" x="20" y="20" width="327" height="21"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                    <nil key="textColor"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="otW-Rz-WWJ" userLabel="lblDescription">
-                                                    <rect key="frame" x="20" y="51" width="327" height="14.333333333333329"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="12"/>
-                                                    <nil key="textColor"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="252" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Pll-05-wBS" userLabel="lblPrice">
-                                                    <rect key="frame" x="352" y="30" width="42" height="20.333333333333329"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                    <nil key="textColor"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
-                                            </subviews>
-                                            <constraints>
-                                                <constraint firstItem="Pll-05-wBS" firstAttribute="leading" secondItem="otW-Rz-WWJ" secondAttribute="trailing" constant="5" id="9I2-wY-VOF"/>
-                                                <constraint firstItem="stf-A6-52x" firstAttribute="top" secondItem="xHR-ws-umZ" secondAttribute="top" constant="20" id="AE8-zr-Tbf"/>
-                                                <constraint firstItem="otW-Rz-WWJ" firstAttribute="leading" secondItem="stf-A6-52x" secondAttribute="leading" id="Kit-Gc-CVU"/>
-                                                <constraint firstItem="otW-Rz-WWJ" firstAttribute="top" secondItem="stf-A6-52x" secondAttribute="bottom" constant="10" id="UyD-lK-pQw"/>
-                                                <constraint firstItem="Pll-05-wBS" firstAttribute="centerY" secondItem="xHR-ws-umZ" secondAttribute="centerY" id="XWQ-h6-2Kn"/>
-                                                <constraint firstItem="stf-A6-52x" firstAttribute="leading" secondItem="xHR-ws-umZ" secondAttribute="leading" constant="20" id="caw-r0-bJC"/>
-                                                <constraint firstItem="Pll-05-wBS" firstAttribute="leading" secondItem="stf-A6-52x" secondAttribute="trailing" constant="5" id="m7h-tS-BPH"/>
-                                                <constraint firstAttribute="trailing" secondItem="Pll-05-wBS" secondAttribute="trailing" constant="20" id="uak-tt-W1U"/>
-                                            </constraints>
-                                        </tableViewCellContentView>
-                                        <connections>
-                                            <outlet property="lblDescription" destination="otW-Rz-WWJ" id="MyZ-Z8-H4G"/>
-                                            <outlet property="lblPrice" destination="Pll-05-wBS" id="scy-AW-7gm"/>
-                                            <outlet property="lblTitle" destination="stf-A6-52x" id="FZQ-g8-JeP"/>
-                                        </connections>
-                                    </tableViewCell>
-                                </prototypes>
                             </tableView>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>

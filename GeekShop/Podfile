@@ -9,6 +9,8 @@ target 'GeekShop' do
   pod 'Swinject'
   pod 'Alamofire'
   pod 'Kingfisher'
+  pod 'Firebase/Analytics'
+  pod 'Firebase/Crashlytics'
 
   target 'GeekShopTests' do
     inherit! :search_paths

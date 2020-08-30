@@ -10,35 +10,37 @@ import UIKit
 
 class ProfileViewController: BaseViewController {
     // MARK: Outlets
-    @IBOutlet weak var txtEmail: UITextField!
-    @IBOutlet weak var lblEmailError: UILabel!
-    @IBOutlet weak var lblEmailTitle: UILabel!
+    @IBOutlet weak var fieldEmail: TextFieldView! {
+        didSet {
+            fieldEmail.fieldContentType = .emailAddress
+        }
+    }
     
-    @IBOutlet weak var txtPassword: UITextField!
-    @IBOutlet weak var lblPasswordError: UILabel!
-    @IBOutlet weak var lblPasswordTitle: UILabel!
+    @IBOutlet weak var fieldPassword: TextFieldView! {
+        didSet {
+            fieldPassword.fieldContentType = .password
+            fieldPassword.isSecureTextEntry = true
+        }
+    }
     
-    @IBOutlet weak var txtNewPassword: UITextField!
-    @IBOutlet weak var lblNewPasswordError: UILabel!
-    @IBOutlet weak var lblNewPasswordTitle: UILabel!
-        
-    @IBOutlet weak var txtFirstName: UITextField!
-    @IBOutlet weak var txtFirstNameError: UILabel!
-    @IBOutlet weak var lblFirstNameTitle: UILabel!
-        
-    @IBOutlet weak var txtLastName: UITextField!
-    @IBOutlet weak var lblLastNameTitle: UILabel!
+    @IBOutlet weak var fieldNewPassword: TextFieldView! {
+        didSet {
+            fieldNewPassword.fieldContentType = .password
+            fieldNewPassword.isSecureTextEntry = true
+             fieldNewPassword.fieldErrorTitle = "Поле не совпадает"
+        }
+    }
     
+    @IBOutlet weak var fieldFirstName: TextFieldView!
+    @IBOutlet weak var fieldLastName: TextFieldView!
     @IBOutlet weak var btnSave: UIButton!
-    @IBOutlet var btnExit: UIButton!
+    @IBOutlet weak var btnExit: UIButton!
+    @IBOutlet weak var lblNeedEnterTitle: UILabel!
     @IBOutlet weak var btnEnter: UIButton!
     
-    @IBOutlet weak var lblAuthorisationNeeded: UILabel!
-    
     // MARK: Properties
-    // Фабрика запросов
     var userFactory = RequestFactory().makeUsersFactory()
-    var verifier: ProfileVerifier!
+    var verifier: FormVerifier!
     
     // MARK: Lifecycle    
     override func viewDidLoad() {
@@ -53,10 +55,7 @@ class ProfileViewController: BaseViewController {
         btnSave.isHidden = true
                         
         // Инициализируем класс проверки данных пользователя
-        verifier = ProfileVerifier(requiredFields: [txtEmail: lblEmailError,
-                                                    txtPassword: lblPasswordError,
-                                                    txtNewPassword: lblNewPasswordError,
-                                                    txtFirstName: txtFirstNameError])
+        verifier = FormVerifier(required: [fieldEmail, fieldPassword, fieldNewPassword, fieldFirstName])
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -82,11 +81,11 @@ class ProfileViewController: BaseViewController {
                         self.toggleProfileInterface(hide: false)
                         
                         // Пользователя найден - показываем кнопку сохранить и заполняем форму
-                        self.txtEmail.text = userData.userEmail
-                        self.txtFirstName.text = userData.firstName
-                        self.txtLastName.text = userData.lastName
-                        self.txtPassword.text = userData.userPassword
-                        self.txtNewPassword.text = userData.userPassword
+                        self.fieldEmail.fieldValue = userData.userEmail
+                        self.fieldFirstName.fieldValue = userData.firstName
+                        self.fieldLastName.fieldValue = userData.lastName
+                        self.fieldPassword.fieldValue = userData.userPassword
+                        self.fieldNewPassword.fieldValue = userData.userPassword
                     }
                     
                 case .failure(_):
@@ -100,28 +99,15 @@ class ProfileViewController: BaseViewController {
     }
     
     private func toggleProfileInterface(hide: Bool = true) {
-        lblEmailError.isHidden = hide
-        lblEmailTitle.isHidden = hide
-        txtEmail.isHidden = hide
-        
-        lblPasswordError.isHidden = hide
-        lblPasswordTitle.isHidden = hide
-        txtPassword.isHidden = hide
-
-        lblNewPasswordTitle.isHidden = hide
-        lblNewPasswordError.isHidden = hide
-        txtNewPassword.isHidden = hide
-
-        lblFirstNameTitle.isHidden = hide
-        txtFirstNameError.isHidden = hide
-        txtFirstName.isHidden = hide
-
-        lblLastNameTitle.isHidden = hide
-        txtLastName.isHidden = hide
-
+        fieldEmail.isHidden = hide
+        fieldPassword.isHidden = hide
+        fieldNewPassword.isHidden = hide
+        fieldFirstName.isHidden = hide
+        fieldLastName.isHidden = hide
+        btnSave.isHidden = hide
         btnExit.isHidden = hide
         btnEnter.isHidden = !hide
-        lblAuthorisationNeeded.isHidden = !hide
+        lblNeedEnterTitle.isHidden = !hide
     }
 
     // MARK: Method
@@ -137,22 +123,25 @@ class ProfileViewController: BaseViewController {
         verifier.check()
         
         // Унврапим опционалы
-        guard let email = txtEmail.text, !email.isEmpty,
-            let password = txtPassword.text, !password.isEmpty,
-            let newPassword = txtNewPassword.text,
-            let firstName = txtFirstName.text, !firstName.isEmpty,
+        guard let email = fieldEmail.fieldValue, !email.isEmpty,
+            let password = fieldPassword.fieldValue, !password.isEmpty,
+            let newPassword = fieldNewPassword.fieldValue,
+            let firstName = fieldFirstName.fieldValue, !firstName.isEmpty,
             let userId = userId else {
                 return
         }
                 
         // Проверяем совпалили пароли
         guard password == newPassword else {
-            lblNewPasswordError.isHidden = false
+            fieldNewPassword.error()
             return
         }
         
         // Собираем новую информацию для изменения
-        let user = User(userId: userId, login: email, password: password, email: email, firstName: firstName, lastName: txtLastName.text)
+        let user = User(userId: userId, login: email,
+                        password: password, email: email,
+                        firstName: firstName, lastName: fieldLastName.fieldValue
+        )
         
         userFactory.changeUserFrom(user: user) { [weak self] response in
             guard let self = self else { return }
@@ -172,7 +161,6 @@ class ProfileViewController: BaseViewController {
     }
     
     @IBAction func btnEnter(_ sender: Any) {
-        toggleProfileInterface(hide: true)
         login(delegate: self)
     }
     
@@ -189,12 +177,11 @@ class ProfileViewController: BaseViewController {
 
 extension ProfileViewController: NeedLoginDelegate {
     func didReloadData() {
-        self.toggleProfileInterface(hide: false)
         loadProfile()
     }
     
     func willDisappear() {
-        self.toggleProfileInterface(hide: true)
+        toggleProfileInterface(hide: true)
     }
     
 }
