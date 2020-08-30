@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="16097.2" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="127" id="KGk-i7-Jjw" customClass="ProductViewCell" customModule="GeekShop" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="586" height="127"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" ambiguous="YES" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
+                <rect key="frame" x="0.0" y="0.0" width="586" height="127"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="jHc-rg-SIV" userLabel="imgProduct">
+                        <rect key="frame" x="10" y="10" width="100" height="100"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="100" id="DIc-ZG-o0S"/>
+                            <constraint firstAttribute="width" secondItem="jHc-rg-SIV" secondAttribute="height" multiplier="1:1" id="RW0-IQ-4Hn"/>
+                        </constraints>
+                    </imageView>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="LNY-EA-2Uj" userLabel="lblProductName">
+                        <rect key="frame" x="120" y="10" width="456" height="17"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                        <nil key="textColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gw3-eP-0tf" userLabel="lblProductDescription">
+                        <rect key="frame" x="120" y="37" width="456" height="14.5"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                        <nil key="textColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hVw-6c-USl" userLabel="lblProductPrice">
+                        <rect key="frame" x="120" y="61.5" width="42" height="21"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                        <nil key="textColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="руб." textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="MDZ-cf-ROy" userLabel="lblCurrencyTitle">
+                        <rect key="frame" x="172" y="61.5" width="33" height="21"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                        <nil key="textColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="fill" contentVerticalAlignment="fill" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="LwQ-hm-MCz" userLabel="btnAddToCart">
+                        <rect key="frame" x="546" y="57.5" width="30" height="25"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="30" id="2lP-7i-cMQ"/>
+                            <constraint firstAttribute="height" constant="25" id="cTC-H3-2TQ"/>
+                        </constraints>
+                        <state key="normal" image="cart.badge.plus" catalog="system">
+                            <preferredSymbolConfiguration key="preferredSymbolConfiguration" scale="small" weight="regular"/>
+                        </state>
+                        <connections>
+                            <action selector="btnAddToCartClicked:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="tHE-7r-0bx"/>
+                        </connections>
+                    </button>
+                </subviews>
+                <constraints>
+                    <constraint firstItem="jHc-rg-SIV" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="10" id="7Ky-O3-jg6"/>
+                    <constraint firstAttribute="trailing" secondItem="gw3-eP-0tf" secondAttribute="trailing" constant="10" id="Doi-Kx-zFs"/>
+                    <constraint firstAttribute="trailing" secondItem="LwQ-hm-MCz" secondAttribute="trailing" constant="10" id="UGz-m1-aLn"/>
+                    <constraint firstItem="hVw-6c-USl" firstAttribute="top" secondItem="gw3-eP-0tf" secondAttribute="bottom" constant="10" id="UHk-4D-RCg"/>
+                    <constraint firstItem="MDZ-cf-ROy" firstAttribute="leading" secondItem="hVw-6c-USl" secondAttribute="trailing" constant="10" id="X5A-zz-Oy4"/>
+                    <constraint firstAttribute="bottom" secondItem="jHc-rg-SIV" secondAttribute="bottom" constant="10" id="aDw-6O-g5T"/>
+                    <constraint firstItem="gw3-eP-0tf" firstAttribute="leading" secondItem="jHc-rg-SIV" secondAttribute="trailing" constant="10" id="fa1-hT-pi0"/>
+                    <constraint firstAttribute="trailing" secondItem="LNY-EA-2Uj" secondAttribute="trailing" constant="10" id="lCk-6o-ayf"/>
+                    <constraint firstItem="LNY-EA-2Uj" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="10" id="nK2-bd-brA"/>
+                    <constraint firstItem="jHc-rg-SIV" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="10" id="nUh-Qh-1RA"/>
+                    <constraint firstItem="LNY-EA-2Uj" firstAttribute="leading" secondItem="jHc-rg-SIV" secondAttribute="trailing" constant="10" id="rzb-ey-IyC"/>
+                    <constraint firstItem="LwQ-hm-MCz" firstAttribute="bottom" secondItem="hVw-6c-USl" secondAttribute="bottom" id="s2W-HP-Y2P"/>
+                    <constraint firstItem="MDZ-cf-ROy" firstAttribute="bottom" secondItem="hVw-6c-USl" secondAttribute="bottom" id="uQE-Ef-FMq"/>
+                    <constraint firstItem="hVw-6c-USl" firstAttribute="leading" secondItem="jHc-rg-SIV" secondAttribute="trailing" constant="10" id="xce-KB-WEU"/>
+                    <constraint firstItem="gw3-eP-0tf" firstAttribute="top" secondItem="LNY-EA-2Uj" secondAttribute="bottom" constant="10" id="zXT-AG-Z23"/>
+                </constraints>
+            </tableViewCellContentView>
+            <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
+            <connections>
+                <outlet property="btnAddToCart" destination="LwQ-hm-MCz" id="hgI-Zm-7Dz"/>
+                <outlet property="imgProduct" destination="jHc-rg-SIV" id="SGY-no-yff"/>
+                <outlet property="lblProductDescription" destination="gw3-eP-0tf" id="m0y-Bf-iCn"/>
+                <outlet property="lblProductName" destination="LNY-EA-2Uj" id="IpR-Hn-wt7"/>
+                <outlet property="lblProductPrice" destination="hVw-6c-USl" id="iqC-CM-mou"/>
+            </connections>
+            <point key="canvasLocation" x="68.115942028985515" y="-31.138392857142854"/>
+        </tableViewCell>
+    </objects>
+    <resources>
+        <image name="cart.badge.plus" catalog="system" width="128" height="98"/>
+    </resources>
+</document>

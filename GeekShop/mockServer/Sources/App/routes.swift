@@ -1,41 +1,40 @@
 import Vapor
 
 func routes(_ app: Application) throws {
-    let resulter = ShowResults()
     
     app.get { req in
-        return resulter.returnError(message: "Forbidden")
+        return View(req: req).error(message: "Forbidden")
     }
 
-    app.get("users", ":action") { req -> String in
+    app.get("users", ":action") { req -> EventLoopFuture<String> in
         if let action = req.parameters.get("action") {
-            return Users().doAction(action: action, queryString: req.query)
+            return Users(req).doAction(action: action)
         } else {
-            return resulter.returnError(message: "You must specify method")
+            return View(req: req).error(message: "You must specify method")
         }
     }
     
-    app.get("catalog", ":action") { req -> String in
+    app.get("catalog", ":action") { req -> EventLoopFuture<String> in
         if let action = req.parameters.get("action") {
-            return Catalog().doAction(action: action, queryString: req.query)
+            return Catalog(req).doAction(action: action)
         } else {
-            return resulter.returnError(message: "You must specify method")
+            return View(req: req).error(message: "You must specify method")
         }
     }
     
-    app.get("reviews", ":action") { req -> String in
+    app.get("reviews", ":action") { req -> EventLoopFuture<String> in
         if let action = req.parameters.get("action") {
-            return Reviews().doAction(action: action, queryString: req.query)
+            return Reviews(req).doAction(action: action)
         } else {
-            return resulter.returnError(message: "You must specify method")
+            return View(req: req).error(message: "You must specify method")
         }
     }
     
-    app.get("basket", ":action") { req -> String in
+    app.get("basket", ":action") { req -> EventLoopFuture<String> in
         if let action = req.parameters.get("action") {
-            return Basket().doAction(action: action, queryString: req.query)
+            return Basket(req).doAction(action: action)
         } else {
-            return resulter.returnError(message: "You must specify method")
+            return View(req: req).error(message: "You must specify method")
         }
     }
 }

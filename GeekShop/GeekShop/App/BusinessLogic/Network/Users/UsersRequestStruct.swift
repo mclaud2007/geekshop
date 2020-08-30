@@ -39,6 +39,19 @@ extension Users {
         }
     }
     
+    struct GetUser: RequestRouter {
+        var path: String = "get"
+        let baseUrl: URL
+        let method: HTTPMethod = .get
+        
+        let userId: Int
+        var parameters: Parameters? {
+            return [
+                "userId": userId
+            ]
+        }
+    }
+    
     struct UserData: RequestRouter {
         let baseUrl: URL
         let method: HTTPMethod = .get

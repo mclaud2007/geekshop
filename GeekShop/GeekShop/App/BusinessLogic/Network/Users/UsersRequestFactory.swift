@@ -10,7 +10,10 @@ import Foundation
 import Alamofire
 
 protocol UsersRequestFactory {
+    func getUserBy(userId: Int, completion: @escaping (DataResponse<GetUserDataResult>) -> Void)
+    
     func loginWith(userLogin: String, userPassword: String, completion: @escaping (Alamofire.DataResponse<LoginResult>) -> Void)
+    
     func logoutCurrentUser(completion: @escaping (Alamofire.DataResponse<LogoutResult>) -> Void)
     
     func changeUserFrom(user data: User, completion: @escaping (Alamofire.DataResponse<ChangeUserDataResult>) -> Void)

@@ -1,95 +1,102 @@
 //
-//  File.swift
+//  Catalog.swift
 //  
 //
 //  Created by Григорий Мартюшин on 29.07.2020.
 //
 
-import Foundation
+import Fluent
+import FluentSQLiteDriver
 import Vapor
 
-typealias Product = Dictionary<String,Any>
-
 class Catalog {
-    let resulter = ShowResults()
-    let catalogDB: [Product] = [["id_product": 123,
-                                 "product_name": "Ноутбук",
-                                 "price": 45600,
-                                 "product_description": "Мощный игровой ноутбук"],
-                                ["id_product": 456,
-                                 "product_name": "Мышка",
-                                 "price": 1000,
-                                 "product_description": "Мощная игровая мышка"]]
+    // MARK: Properties
+    let resulter: View!
+    let req: Request!
     
-    struct CatalogGetParam: Content {
+    struct GetProduct: Content {
         var id: Int?
     }
     
-    func doAction(action: String, queryString: URLQueryContainer?) -> String {
+    // MARK: Methods
+    init(_ req: Request) {
+        self.resulter = View(req: req)
+        self.req = req
+    }
+    
+    // MARK: Catalog router
+    func doAction(action: String) -> EventLoopFuture<String> {
         switch action {
         case "list":
-            return list(queryString)
+            return list()
         case "product":
-            return product(queryString)
+            return product()
         default:
-            return resulter.returnError(message: "Unknown method")
+            return resulter.error(message: "Unknown method")
         }
     }
     
-    func list(_ queryString: URLQueryContainer? = nil) -> String {
-        var resultList: [Product] = []
-        var good: Product
-        
-        for var product in catalogDB {
-            // Внезапно в списке товаров не нужно описание :)
-            product.removeValue(forKey: "product_description")
-            good = product
-            
-            // Формируем массив с результатами
-            resultList.append(good)
+    // MARK: Получение списка товаров
+    func list() -> EventLoopFuture<String> {
+        return CatalogList.query(on: req.db)
+            .all().map { catalog -> [[String: Any]] in
+                return catalog.map { item -> [String: Any] in
+                    if let idProduct = item.$idProduct.value,
+                        let productName = item.$productName.value,
+                        let productDescription = item.$productDescription.value,
+                        let price = item.$price.value {
+                        
+                        return ["id_product": idProduct,
+                                "product_name": productName,
+                                "product_image": ((item.$productImage.value ?? "") ?? ""),
+                                "product_description": productDescription,
+                                "price": price]
+                    } else {
+                        return [:]
+                    }
+                }
+        }.flatMap { result -> EventLoopFuture<String> in
+            return self.resulter.items(message: result)
         }
-        
-        return resulter.returnArrayResult(resultList)
     }
     
-    func productBy(_ productId: Int) -> [Product]? {
+    // MARK: Поиск товара в базе
+    func productBy(_ productId: Int) -> EventLoopFuture<CatalogList?> {
         // Ищем запрошенный товар
-        let product = catalogDB.filter { product in
-            if let pID = product["id_product"] as? Int,
-                pID == productId {
-                return true
-            }
-            
-            return false
-        }
-        
-        return product
+        return CatalogList.query(on: req.db)
+            .filter(\.$idProduct, .equal, productId)
+            .limit(1)
+            .first()
     }
     
-    func product(_ queryString: URLQueryContainer? = nil) -> String {
-        guard let query = try? queryString?.get(CatalogGetParam.self),
+    // MARK: Получение товара по его ID
+    func product() -> EventLoopFuture<String> {
+        guard let query = try? req.query.get(GetProduct.self),
             let productId = query.id else {
-            return resulter.returnError(message: "Good not found")
+                return resulter.error(message: "Good not found")
         }
         
-        // Проверяем наличие всех необходимых данных
-        guard let product = self.productBy(productId),
-            let firstProduct = product.first,
-            let productName = firstProduct["product_name"],
-            let prodcutPrice = firstProduct["price"],
-            let productDescription = firstProduct["product_description"] else {
-                return resulter.returnError(message: "Good not found")
-        }
-        
-        // Собираем результирующий массив с описанием товара
-        let result: Product = ["product_name": productName,
-                               "product_price": prodcutPrice,
-                               "product_description": productDescription
-        ]
-        
-        // Возвращаем JSON
-        return resulter.returnResult(result)
-        
+        return productBy(productId).map { catalog -> [String: Any]? in
+            if let catalog = catalog,
+                let productName = catalog.$productName.value,
+                let productPrice = catalog.$price.value,
+                let productDescription = catalog.$productDescription.value {
+                
+                return ["product_name": productName,
+                        "product_price": productPrice,
+                        "product_description":productDescription,
+                        "product_image": ((catalog.$productImage.value ?? "") ?? "")
+                ]
+            } else {
+                return nil
+            }
+        }.flatMap { result -> EventLoopFuture<String> in
+            if let result = result {
+                return self.resulter.item(message: result)
+            } else {
+                return self.resulter.error(message: "Product not found")
+            }
+        }        
     }
 }
 

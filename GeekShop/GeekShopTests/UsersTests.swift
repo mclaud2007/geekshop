@@ -42,11 +42,11 @@ class UsersTests: XCTestCase {
     }
 
     func testLogin() {
-        usersObject.loginWith(userLogin: "Somebody", userPassword: "Password") { [weak self] (response: DataResponse<LoginResult>) in
+        usersObject.loginWith(userLogin: "test", userPassword: "test") { [weak self] (response: DataResponse<LoginResult>) in
             switch response.result {
             case .success(let loginResult):
                 if loginResult.authToken.isEmpty {
-                   XCTFail("Autho token is empty")
+                   XCTFail("Auth token is empty")
                 }
             case .failure(let error):
                 XCTFail(error.localizedDescription)
@@ -75,7 +75,7 @@ class UsersTests: XCTestCase {
     
     func testRegister() {
         // Создаем экземпляр пользователя для регистрации
-        let userToRegister = User(userId: nil, login: "test", password: "123456", email: "s@ivanov.com", firstName: "Sergey", lastName: "Ivanov")
+        let userToRegister = User(userId: nil, login: "new_test", password: "123456", email: "s@ivanov.com", firstName: "Sergey", lastName: "Ivanov")
         
         usersObject.registerUserWith(user: userToRegister) { [weak self] (response: DataResponse<RegisterResult>) in
             switch response.result {
@@ -94,7 +94,7 @@ class UsersTests: XCTestCase {
     }
     
     func testChangeUserData() {
-        let userToChange = User(userId: 1, login: "test", password: "54321", email: "i@sergeev.com", firstName: "Ivan", lastName: "Sergeev")
+        let userToChange = User(userId: 1, login: "test", password: "test", email: "i@sergeev.com", firstName: "Ivan", lastName: "Sergeev")
         
         usersObject.changeUserFrom(user: userToChange) { [weak self] (response: DataResponse<ChangeUserDataResult>) in
             switch response.result {
@@ -102,6 +102,21 @@ class UsersTests: XCTestCase {
                 if changeUserDataResult.result != 1 {
                     XCTFail("Unknown ChangeUserDataResult")
                 }
+            case .failure(let error):
+                XCTFail(error.localizedDescription)
+            }
+            
+            self?.exectation.fulfill()
+        }
+        
+        wait(for: [exectation], timeout: timeout)
+    }
+    
+    func testGetUserById() {
+        usersObject.getUserBy(userId: 1) { [weak self] (response) in
+            switch response.result {
+            case .success(_):
+                break
             case .failure(let error):
                 XCTFail(error.localizedDescription)
             }

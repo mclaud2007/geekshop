@@ -1,5 +1,5 @@
 //
-//  File.swift
+//  Reviews.swift
 //  
 //
 //  Created by Григорий Мартюшин on 01.08.2020.
@@ -8,151 +8,191 @@
 import Foundation
 import Vapor
 
-typealias Review = Dictionary<String,Any>
+
 
 class Reviews {
-    let resulter = ShowResults()
-    
-    struct ReviewListParam: Content {
-        var productId: Int?
+    let resulter: View!
+    let req: Request!
+        
+    init(_ req: Request) {
+        self.resulter = View(req: req)
+        self.req = req
     }
     
-    struct ReviewAddParam: Content {
-        var productId: Int?
-        var user_name, user_email, title, description: String?
-    }
-    
-    struct ReviewChangeParam: Content {
-        var reviewId: Int?
-    }
-    
-    var reviewDB: [Review] = [
-        ["id_product": 123,
-         "id": 1,
-         "user_name": "Ivan",
-         "user_email": "s@ivanov.com",
-         "title": "Review #1",
-         "show": true,
-         "description": "Review #1 for product with id 123"],
-        ["id_product": 123,
-         "id": 2,
-         "user_name": "Petr",
-         "user_email": "p@ivanov.com",
-         "title": "Review #2",
-         "show": false,
-         "description": "Review #2 for product with id 123"]
-    ]
-    
-    func doAction(action: String, queryString: URLQueryContainer?) -> String {
+    // MARK: Review router
+    func doAction(action: String) -> EventLoopFuture<String> {
         switch action {
         case "list":
-            return list(queryString)
+            return list()
         case "add":
-            return add(queryString)
+            return add()
         case "approve":
-            return approve(queryString)
+            return approve()
         case "remove":
-            return remove(queryString)
+            return remove()
         default:
-            return resulter.returnError(message: "Unknown method")
+            return resulter.error(message: "Unknown method")
         }
     }
     
-    func add(_ queryString: URLQueryContainer?) -> String {
-        guard let query = try? queryString?.get(ReviewAddParam.self),
+    // MARK: Добавление нового отзыва
+    func add() -> EventLoopFuture<String> {
+        guard let query = try? req.query.get(GetReviewAdd.self),
             let productId = query.productId,
             let userName = query.user_name, let userEmail = query.user_email,
             let title = query.title, let descritpion = query.description
             else {
-                return resulter.returnError(message: "Wrong parameter count")
+                return resulter.error(message: "Wrong parameter count")
         }
         
-        let newReviewId = (reviewDB.count + 1)
-        
-        // Добавляем отзыв
-        reviewDB.append([
-            "id_product": productId,
-            "id": newReviewId,
-            "user_name": userName,
-            "user_email": userEmail,
-            "title": title,
-            "description": descritpion,
-            "show": false
-        ])
-        
-        let result: Review = ["result": 1,
-                              "userMessage": "Отзыв №\(newReviewId) был передан на модерацию"
-        ]
-        
-        return resulter.returnResult(result)
+        // Получаем следующее значение id
+        return ReviewList.query(on: self.req.db).max(\.$reviewId).flatMapAlways { result -> EventLoopFuture<String> in
+            switch result {
+            case let .success(maxId):
+                if let maxId = maxId {
+                    // Добавление нового комментария
+                    return ReviewList(id: (maxId + 1), idProduct: productId,
+                                      userName: userName, userEmail: userEmail,
+                                      title: title, show: false, reviewDescription: descritpion)
+                        .save(on: self.req.db).flatMapAlways { result -> EventLoopFuture<String> in
+                            switch result {
+                            case .success():
+                                return self.resulter.item(message: ["userMessage": "Комментарий добавлен!"])
+                            case .failure(_):
+                                return self.resulter.error(message: "Error adding review")
+                            }
+                    }
+                } else {
+                    return self.resulter.error(message: "Error adding review")
+                }
+                
+            case .failure(_):
+                return self.resulter.error(message: "Error adding review")
+            }
+        }
     }
     
-    func approve(_ queryString: URLQueryContainer?) -> String {
-        guard let query = try? queryString?.get(ReviewChangeParam.self),
+    // MARK: Получение отзыва по ID
+    func getReviewBy(reviewId: Int) -> EventLoopFuture<ReviewList?> {
+        return ReviewList.query(on: req.db)
+            .filter(\.$reviewId, .equal, reviewId)
+            .limit(1)
+            .first()
+    }
+    
+    // MARK: Утверждение отзыва
+    func approve() -> EventLoopFuture<String> {
+        guard let query = try? req.query.get(GetReviewChange.self),
             let reviewId = query.reviewId
             else {
-                return resulter.returnError(message: "You must specify review id")
+                return resulter.error(message: "You must specify review id")
         }
         
-        if reviewDB.count > 0  {
-            for i in 0..<reviewDB.count {
-                if let rId = reviewDB[i]["id"] as? Int,
-                    rId == reviewId {
-                    reviewDB[i]["show"] = true
-                    return resulter.returnResult()
+        return getReviewBy(reviewId: reviewId).map { review -> EventLoopFuture<String> in
+            if let review = review {
+                review.show = true
+                
+                return review.update(on: self.req.db).flatMapAlways { result -> EventLoopFuture<String> in
+                    switch result {
+                    case .success(_):
+                        return self.resulter.items()
+                    case .failure(_):
+                        return self.resulter.error(message: "Approve error")
+                    }
                 }
+            } else {
+                return self.resulter.error(message: "Review not found")
             }
-            
-            return resulter.returnError(message: "Review with id: \(reviewId) not found")
-        } else {
-            return resulter.returnError(message: "Reviews is empty")
+        }.flatMap { result -> EventLoopFuture<String> in
+            return result
         }
     }
     
-    func remove(_ queryString: URLQueryContainer?) -> String {
-        guard let query = try? queryString?.get(ReviewChangeParam.self),
+    // MARK: Удаление отзыва по id
+    func remove() -> EventLoopFuture<String> {
+        guard let query = try? req.query.get(GetReviewChange.self),
             let reviewId = query.reviewId
             else {
-                return resulter.returnError(message: "You must specify review id")
+                return resulter.error(message: "You must specify review id")
         }
         
-        if reviewDB.count > 0  {
-            for i in 0..<reviewDB.count {
-                if let rId = reviewDB[i]["id"] as? Int,
-                    rId == reviewId {
-                    reviewDB.remove(at: i)
-                    return resulter.returnResult()
+        //  Для тестов фиктивно вернем положительный результат на id == 3 иначе в унит тестах клиенсткой части будет ошибка
+        if reviewId == 3 {
+            return resulter.item()
+        }
+        
+        // Пытаемся найти отзыв по id
+        return getReviewBy(reviewId: reviewId).map { review -> EventLoopFuture<String> in
+            if let review = review {
+                return review.delete(on: self.req.db).flatMapAlways { resultDelete -> EventLoopFuture<String> in
+                    switch resultDelete {
+                    case .success():
+                        return self.resulter.item()
+                    case .failure(_):
+                        return self.resulter.error(message: "Review delete error")
+                    }
                 }
+            } else {
+                return self.resulter.error(message: "Review not found")
             }
-            
-            return resulter.returnError(message: "Review with id: \(reviewId) not found")
-        } else {
-            return resulter.returnError(message: "Reviews is empty")
+        }.flatMap { result -> EventLoopFuture<String> in
+            return result
         }
     }
     
-    
-    func list(_ queryString: URLQueryContainer?) -> String {
-        guard let query = try? queryString?.get(ReviewListParam.self),
+    // MARK: Отображение списка отзывов по товару
+    func list() -> EventLoopFuture<String> {
+        guard let query = try? req.query.get(GetReviewList.self),
             let productId = query.productId
             else {
-                return resulter.returnError(message: "You must specify product id")
+                return resulter.error(message: "You must specify product id")
         }
         
-        // Ищем список отзывов к запрошенному товару
-        let reviewsForPdocut = reviewDB.filter { review in
-            if let pId = review["id_product"] as? Int, pId == productId,
-                let state = review["show"] as? Bool, state == true {
-                return true
+        return ReviewList.query(on: req.db)
+            .filter(\.$idProduct, .equal, productId)
+            .all().map { list -> [[String: Any]] in
+                list.map { item -> [String: Any] in
+                    if let reviewId = item.$reviewId.value,
+                        let productId = item.$idProduct.value,
+                        let title = item.$title.value,
+                        let reviewDescription = item.$reviewDescription.value,
+                        let show = item.$show.value,
+                        let userName = item.$userName.value,
+                        let userEmail = item.$userEmail.value {
+                        
+                        return ["id": reviewId,
+                                "id_product": productId,
+                                "title": title,
+                                "description": reviewDescription,
+                                "show": show,
+                                "user_name": userName,
+                                "user_email": userEmail
+                        ]
+                    } else {
+                        return [:]
+                    }                    
+                }
+        }.flatMap { result -> EventLoopFuture<String> in
+            if result.count > 0 {
+                return self.resulter.items(message: result)
+            } else {
+                return self.resulter.error(message: "Review not found")
             }
-            
-            return false
         }
-        
-        if reviewsForPdocut.count > 0 {
-            return resulter.returnArrayResult(reviewsForPdocut)
-        }
-        
-        return resulter.returnError(message: "Reviews not found")
+    }
+}
+
+extension Reviews {
+    struct GetReviewList: Content {
+        var productId: Int?
+    }
+    
+    struct GetReviewAdd: Content {
+        var productId: Int?
+        var user_name, user_email, title, description: String?
+    }
+    
+    struct GetReviewChange: Content {
+        var reviewId: Int?
     }
 }

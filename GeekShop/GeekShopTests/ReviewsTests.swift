@@ -42,7 +42,7 @@ class ReviewsTests: XCTestCase {
     }
 
     func testGetReviewList() {
-        reviewObject.getReviewsForProductBy(productId: 123) { [weak self] (response: DataResponse<GetReviewsResult>) in
+        reviewObject.getReviewsForProductBy(productId: 1) { [weak self] (response: DataResponse<GetReviewsResult>) in
             switch response.result {
             case .success(let reviews):
                 if reviews.isEmpty {
@@ -62,7 +62,7 @@ class ReviewsTests: XCTestCase {
                                     userName: "Test", userEmail: "test@mail.ru",
                                     title: "Test", description: "Some review")
         
-        reviewObject.addReviewForProductBy(productId: 123, review: addReviewModel) { [weak self] (response: DataResponse<AddReviewResult>) in
+        reviewObject.addReviewForProductBy(productId: 1, review: addReviewModel) { [weak self] (response: DataResponse<AddReviewResult>) in
             switch response.result {
             case .success(let addResult):
                 if addResult.result != 1 {
@@ -78,7 +78,7 @@ class ReviewsTests: XCTestCase {
     }
     
     func testApproveReview() {
-        reviewObject.setReviewApporoveBy(reviewId: 2) { [weak self] (response: DataResponse<ApproveReviewResult>) in
+        reviewObject.setReviewApporoveBy(reviewId: 3) { [weak self] (response: DataResponse<ApproveReviewResult>) in
             switch response.result {
             case .success(let approveResult):
                 if approveResult.result != 1 {
@@ -95,7 +95,7 @@ class ReviewsTests: XCTestCase {
     }
     
     func testRemoveReview() {
-        reviewObject.removeReviewBy(reviewId: 2) { [weak self] (respone: DataResponse<RemoveReviewResult>) in
+        reviewObject.removeReviewBy(reviewId: 3) { [weak self] (respone: DataResponse<RemoveReviewResult>) in
             switch respone.result {
             case .success(let removeResult):
                 if removeResult.result != 1 {

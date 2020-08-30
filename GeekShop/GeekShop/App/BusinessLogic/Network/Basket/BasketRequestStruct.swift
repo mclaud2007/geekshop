@@ -15,10 +15,10 @@ extension Basket {
         var method: HTTPMethod = .get
         var path: String = "get"
         
-        let sessionId: Int
+        let userId: Int
         var parameters: Parameters? {
             return [
-                "sessionId": sessionId
+                "userId": userId
             ]
         }
     }
@@ -28,13 +28,13 @@ extension Basket {
         var method: HTTPMethod = .get
         var path: String = "add"
         
-        let sessionId: Int
+        let userId: Int
         let productId: Int
         let quantity: Int
         
         var parameters: Parameters? {
             return [
-                "sessionId": sessionId,
+                "userId": userId,
                 "productId": productId,
                 "quantity": quantity
             ]
@@ -46,12 +46,12 @@ extension Basket {
         var method: HTTPMethod = .get
         var path: String = "remove"
         
-        let sessionId: Int
+        let userId: Int
         let productId: Int
         
         var parameters: Parameters? {
             return [
-                "sessionId": sessionId,
+                "userId": userId,
                 "productId": productId
             ]
         }
@@ -62,15 +62,27 @@ extension Basket {
         var method: HTTPMethod = .get
         var path: String = "pay"
         
-        let sessionId: Int
+        let userId: Int
         let paySumm: Int
         
         var parameters: Parameters? {
             return [
-                "sessionId": sessionId,
+                "userId": userId,
                 "paySumm": paySumm
             ]
         }
+    }
+    
+    struct ClearBasketData: RequestRouter {
+        var baseUrl: URL
+        var method: HTTPMethod = .get
+        var path: String = "clear"
         
+        let userId: Int
+        var parameters: Parameters? {
+            return [
+                "userId": userId
+            ]
+        }
     }
 }

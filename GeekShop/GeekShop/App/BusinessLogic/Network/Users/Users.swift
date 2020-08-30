@@ -34,6 +34,11 @@ extension Users: UsersRequestFactory {
         let requestModel = Logout(baseUrl: baseUrl, userId: 1)
         self.request(request: requestModel, completionHandler: completion)
     }
+    
+    func getUserBy(userId: Int, completion: @escaping (DataResponse<GetUserDataResult>) -> Void) {
+        let requestModel = GetUser(baseUrl: baseUrl, userId: userId)
+        self.request(request: requestModel, completionHandler: completion)
+    }
 
     func changeUserFrom(user data: User, completion: @escaping (DataResponse<ChangeUserDataResult>) -> Void) {
         guard let userId = data.userId else { return }
