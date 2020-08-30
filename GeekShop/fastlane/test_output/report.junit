@@ -1,0 +1,36 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<testsuites name='SnapshotGeekShopUITests.xctest' tests='19' failures='0'>
+  <testsuite name='GeekShopTests.BasketTests' tests='4' failures='0'>
+    <testcase classname='GeekShopTests.BasketTests' name='testAddToBasket' time='0.038'/>
+    <testcase classname='GeekShopTests.BasketTests' name='testGetBasket' time='0.014'/>
+    <testcase classname='GeekShopTests.BasketTests' name='testPayOrder' time='0.015'/>
+    <testcase classname='GeekShopTests.BasketTests' name='testRemoveFromBasket' time='0.022'/>
+  </testsuite>
+  <testsuite name='GeekShopTests.CatalogTests' tests='2' failures='0'>
+    <testcase classname='GeekShopTests.CatalogTests' name='testCatalogData' time='0.021'/>
+    <testcase classname='GeekShopTests.CatalogTests' name='testGoodById' time='0.009'/>
+  </testsuite>
+  <testsuite name='GeekShopTests.ResponseCodableTests' tests='1' failures='0'>
+    <testcase classname='GeekShopTests.ResponseCodableTests' name='testShouldDownloadAndParse' time='0.214'/>
+  </testsuite>
+  <testsuite name='GeekShopTests.ReviewsTests' tests='4' failures='0'>
+    <testcase classname='GeekShopTests.ReviewsTests' name='testAddReview' time='0.013'/>
+    <testcase classname='GeekShopTests.ReviewsTests' name='testApproveReview' time='0.010'/>
+    <testcase classname='GeekShopTests.ReviewsTests' name='testGetReviewList' time='0.010'/>
+    <testcase classname='GeekShopTests.ReviewsTests' name='testRemoveReview' time='0.007'/>
+  </testsuite>
+  <testsuite name='GeekShopTests.UsersTests' tests='5' failures='0'>
+    <testcase classname='GeekShopTests.UsersTests' name='testChangeUserData' time='0.011'/>
+    <testcase classname='GeekShopTests.UsersTests' name='testGetUserById' time='0.009'/>
+    <testcase classname='GeekShopTests.UsersTests' name='testLogin' time='0.009'/>
+    <testcase classname='GeekShopTests.UsersTests' name='testLogout' time='0.011'/>
+    <testcase classname='GeekShopTests.UsersTests' name='testRegister' time='0.008'/>
+  </testsuite>
+  <testsuite name='GeekShopUITests.GeekShopUITests' tests='2' failures='0'>
+    <testcase classname='GeekShopUITests.GeekShopUITests' name='testLoginFail' time='12.506'/>
+    <testcase classname='GeekShopUITests.GeekShopUITests' name='testLoginOk' time='10.826'/>
+  </testsuite>
+  <testsuite name='SnapshotGeekShopUITests.SnapshotGeekShopUITests' tests='1' failures='0'>
+    <testcase classname='SnapshotGeekShopUITests.SnapshotGeekShopUITests' name='testMakeSnapshot' time='26.984'/>
+  </testsuite>
+</testsuites>

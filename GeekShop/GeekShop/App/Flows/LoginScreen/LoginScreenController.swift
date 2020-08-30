@@ -9,7 +9,7 @@
 
 import UIKit
 
-class LoginScreenController: UIViewController {
+class LoginScreenController: BaseViewController, TrackableMixin {
     // MARK: Outlets
     @IBOutlet weak var txtLogin: UITextField!
     @IBOutlet weak var txtPassword: UITextField!
@@ -17,9 +17,6 @@ class LoginScreenController: UIViewController {
     
     // MARK: Properties
     let userFactory = RequestFactory().makeUsersFactory()
-    let session = Session.shared
-
-    var userId: Int?
     var authToken: String?
     
     // MARK: Lifecycle
@@ -29,7 +26,6 @@ class LoginScreenController: UIViewController {
         // По клику на вью убираем клавиатуру
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(viewClicked(_:)))
         view.addGestureRecognizer(tapGesture)
-        
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -105,31 +101,43 @@ class LoginScreenController: UIViewController {
             switch response.result {
             case .success(let login):
                 DispatchQueue.main.async {
-                    self.userId = login.user.idUser
+                    // Обновляем данные
                     self.authToken = login.authToken
-                    self.session.setUserInfo(login.user)
+                    self.app.session.setUserInfo(login.user)
                     
-                    self.performSegue(withIdentifier: "enter", sender: self)
+                    // Записываем успешный вход
+                    self.track(.login(success: true))
+                                        
+                    // Закрываем окно входа
+                    self.dismiss(animated: true)
+                    
+                    // Обновляем данные на странице, которая вызвала экран входа
+                    self.delegate?.didReloadData()
                 }
                 
             case .failure(_):
                 DispatchQueue.main.async {
+                    // Записываем сообщение об ошибке входа
+                    self.track(.login(success: false))
+                    
+                    // Показываем сообщение об ошибке
                     self.showErrorMessage(message: "При попытке входа произошлка ошибка")
+                    
                 }                
             }
         }
     }
 
+    @IBAction func btnCancelClicked(_ sender: Any) {
+        dismiss(animated: true)
+        self.delegate?.willDisappear()
+    }
+    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         // Если запросили регистрацию, проверим не заполнено ли поле логин, если да перекинем на новую форму
         if segue.identifier == "register", let destination = segue.destination as? RegisterViewController {
             destination.userLogin = txtLogin.text
             destination.userPassword = txtPassword.text
-        } else if segue.identifier == "enter", let destination = segue.destination as? UITabBarController {
-            if let profile = destination.viewControllers?.first as? ProfileViewController {
-                profile.userId = userId
-            }            
-            
         }
         
         // А также для всех переходов - надо вернуть навигацию

@@ -8,9 +8,9 @@
 
 import UIKit
 
-class CatalogViewController: UIViewController {
+class CatalogViewController: UIViewController, TrackableMixin {
     // MARK: Outlets
-    @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var tableView: UITableView! 
     
     // MARK: Properties
     var catalogFactory = RequestFactory().makeCatalogFactory()
@@ -19,8 +19,11 @@ class CatalogViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        title = "Каталог"
+        
         tableView.delegate = self
         tableView.dataSource = self
+        tableView.register(UINib(nibName: "ProductViewCell", bundle: nil), forCellReuseIdentifier: "catalogCell")
 
         // Пытаемся получить список товаров
         catalogFactory.getProductsList { response in
@@ -29,6 +32,9 @@ class CatalogViewController: UIViewController {
                 DispatchQueue.main.async {
                     self.productList = catalogResult
                     self.tableView.reloadData()
+                    
+                    // Записываем событие "открыт каталог"
+                    self.track(.openCatalogPage(param: ["TOTAL_GOODS": catalogResult.count]))
                 }
                 
             case .failure(_):
@@ -41,17 +47,13 @@ class CatalogViewController: UIViewController {
 }
 
 extension CatalogViewController: UITableViewDelegate {
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        80
-    }
-    
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        
-        if let productVC = storyboard.instantiateViewController(identifier: "productPage") as? ProductViewController {
+        if let productVC = AppManager.shared.getScreenPage(storyboard: "Catalog", identifier: "productDetailScreen") as? ProductViewController {
             productVC.productID = productList[indexPath.row].idProduct
             navigationController?.pushViewController(productVC, animated: true)
         }
+        
+        tableView.deselectRow(at: indexPath, animated: false)
     }
 }
 
@@ -61,12 +63,12 @@ extension CatalogViewController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: "catalogCell", for: indexPath) as? CatalogTableViewCell else {
-            preconditionFailure()
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: "catalogCell", for: indexPath) as? ProductViewCell else {
+            assertionFailure("Can't dequeue reusable cell withIdentifier: catalogCell")
+            return UITableViewCell()
         }
         
         cell.configureWith(product: productList[indexPath.row])
-        tableView.deselectRow(at: indexPath, animated: false)
         
         return cell
     }

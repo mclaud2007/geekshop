@@ -8,11 +8,19 @@
 
 import Foundation
 
-class Session {
+class Session: TrackableMixin {
     static var shared = Session()
     private(set) var userInfo: UserResult?
+    var currentUserId: Int? {
+        return userInfo?.idUser
+    }
     
     func setUserInfo(_ info: UserResult) {
         self.userInfo = info
+    }
+    
+    func kill() {
+        self.userInfo = nil
+        self.track(.logout)
     }
 }

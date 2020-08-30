@@ -28,6 +28,15 @@
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
       shouldUseLaunchSchemeArgsEnv = "YES"
       codeCoverageEnabled = "YES">
+      <PreActions>
+         <ExecutionAction
+            ActionType = "Xcode.IDEStandardExecutionActionsCore.ExecutionActionType.ShellScriptAction">
+            <ActionContent
+               title = "Run Script"
+               scriptText = "# Type a script or drag a script file from your workspace to insert its path.&#10;killall Simulator&#10;defaults write com.apple.iphonesimulator ConnectHardwareKeyboard -bool false&#10;">
+            </ActionContent>
+         </ExecutionAction>
+      </PreActions>
       <Testables>
          <TestableReference
             skipped = "NO">
@@ -46,6 +55,16 @@
                BlueprintIdentifier = "07E7DD1424C2D9830097EEE6"
                BuildableName = "GeekShopUITests.xctest"
                BlueprintName = "GeekShopUITests"
+               ReferencedContainer = "container:GeekShop.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "0792E58324F5717E002C81AB"
+               BuildableName = "SnapshotGeekShopUITests.xctest"
+               BlueprintName = "SnapshotGeekShopUITests"
                ReferencedContainer = "container:GeekShop.xcodeproj">
             </BuildableReference>
          </TestableReference>
@@ -71,6 +90,16 @@
             ReferencedContainer = "container:GeekShop.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
+      <CommandLineArguments>
+         <CommandLineArgument
+            argument = "-FIRAnalyticsDebugEnabled"
+            isEnabled = "YES">
+         </CommandLineArgument>
+         <CommandLineArgument
+            argument = "-FIRDebugEnabled"
+            isEnabled = "YES">
+         </CommandLineArgument>
+      </CommandLineArguments>
    </LaunchAction>
    <ProfileAction
       buildConfiguration = "Release"

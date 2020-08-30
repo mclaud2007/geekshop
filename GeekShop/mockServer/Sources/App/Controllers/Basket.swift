@@ -26,6 +26,8 @@ class Basket {
             return addToBasket()
         case "remove":
             return removeFromBasket()
+        case "clear":
+            return clearBasket()
         case "pay":
             return payOrder()
         default:
@@ -81,13 +83,49 @@ class Basket {
                 return self.resulter.item(message: result)
                 
             } else {
-                return self.resulter.error(message: "Basket is empty")
+                let result: [String: Any] = ["amount": 0,
+                                             "countGoods": 0,
+                                             "contents": []]
+                
+                return self.resulter.item(message: result)
             }
         }
     }
     
-    // MARK: Добавляем продукт в корзину
+    // MARK: Добавление товара в корзину (если такой товар там уже есть, то просто увеличить количество)
     func addToBasket() -> EventLoopFuture<String> {
+        guard let query = try? req.query.get(AddToBasket.self),
+            let userId = query.userId,
+            let productId = query.productId,
+            let quantity = query.quantity else {
+                return resulter.error(message: "Wrong parameter count")
+        }
+        
+        // Попытаемся найти товар в корзине
+        return Baskets.query(on: req.db)
+            .filter(\.$idProduct, .equal, productId)
+            .filter(\.$userId, .equal, userId)
+            .first()
+            .flatMap { basket -> EventLoopFuture<String> in
+                if let basket = basket {
+                    basket.quantity = (basket.$quantity.value ?? 0) + quantity;
+                    
+                    return basket.update(on: self.req.db).flatMapAlways { result -> EventLoopFuture<String> in
+                        switch result {
+                        case .success(_):
+                            return self.resulter.items()
+                        case .failure(_):
+                            return self.resulter.error(message: "Add to basket error")
+                        }
+                    }
+                } else {
+                    return self.addToBasketNewProd()
+                }
+        }
+    }
+    
+    // MARK: Добавляем продукт в корзину
+    func addToBasketNewProd() -> EventLoopFuture<String> {
         guard let query = try? req.query.get(AddToBasket.self),
             let userId = query.userId,
             let productId = query.productId,
@@ -120,17 +158,31 @@ class Basket {
         }
     }
     
+    // MARK: Очистка корзины
+    func clearBasket() -> EventLoopFuture<String> {
+        guard let query = try? req.query.get(CleanBasket.self),
+            let userId = query.userId else {
+                return resulter.error(message: "Wrong parameter count")
+        }
+        
+        // Ищем содержимое карзины для пользователя
+        return Baskets.query(on: req.db)
+            .filter(\.$userId, .equal, userId)
+            .all().flatMap { baskets -> EventLoopFuture<String> in
+                baskets.forEach { basket in
+                    let _ = basket.delete(on: self.req.db)
+                }
+                
+                return self.resulter.item()
+        }
+    }
+    
     // MARK: Удаление товара из карзины
     func removeFromBasket() -> EventLoopFuture<String> {
         guard let query = try? req.query.get(RemoveFromBasket.self),
             let userId = query.userId,
             let productId = query.productId else {
                 return resulter.error(message: "Wrong parameter count")
-        }
-        
-        // Чтобы юнит тест в клиенте не падал вернем позитив в случае если товар и пользователь равен 1
-        if userId == 1 && productId == 1 {
-            return resulter.item()
         }
         
         // Ищем запись по продукту
@@ -162,12 +214,7 @@ class Basket {
             let paySumm = query.paySumm else {
                 return resulter.error(message: "Wrong parameter count")
         }
-        
-        // Чтобы юнит тест в клиенте не падал вернем позитив в слуыае если пользователь равен 1
-        if userId == 1 {
-            return resulter.items()
-        }
-        
+                
         // Получаем корзину пользователя
         return Baskets.query(on: req.db)
             .filter(\.$userId, .equal, userId)
@@ -223,5 +270,9 @@ extension Basket {
     struct PayBasket: Content {
         var userId: Int?
         var paySumm: Int?
+    }
+    
+    struct CleanBasket: Content {
+        var userId: Int?
     }
 }
